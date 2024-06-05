@@ -1,0 +1,116 @@
+.principle-container{
+    position: relative;
+
+
+    height: 100%;
+    width: 100%;
+    background-color: #f5f5f5;
+
+}
+
+.background-img{
+    height: 100%;
+    width: 100%;
+    img{
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+}
+
+.form-login{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: end;
+    align-items: center;
+    margin-right: 500px;
+    background: rgb(255,255,255);
+    background: linear-gradient(90deg, rgba(255,255,255,0) 22%, rgba(76,180,74,1) 71%);
+}
+
+
+
+.card-container {
+    margin: 150px;
+    position: relative;
+    width: 450px; /* Ancho de la tarjeta */
+    height: 500px; /* Altura de la tarjeta */
+    min-width: 300px; 
+    min-height: 400px;
+
+    h1{
+        text-align: center;
+        font-size: 40px;
+        font-family: Arial, Helvetica, sans-serif;
+        color: #258D19;
+    
+    }
+  }
+  
+  .example-card {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 25px;
+    display: flex;
+    gap: 50px;
+  }
+  
+  .green-card {
+    margin-top: 25px;
+    margin-left: 18px;
+    background-color: #258D19; /* Color de la tarjeta verde */
+    z-index: 1; /* Ponerla detrás de la tarjeta blanca */
+  }
+  
+  .white-card {
+    background-color: white; /* Color de la tarjeta blanca */
+    z-index: 2; /* Ponerla encima de la tarjeta verde */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+.sigin-form{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    button{
+        margin-top: 20px;
+        display: flex;
+        justify-content: center;
+        width: 150px;
+        height: 50px;
+        border-radius: 5px;
+        background-color: #258D19;
+        font-family: Arial, Helvetica, sans-serif;
+        color: #ffffff;
+    }
+
+}
+
+
+:host::ng-deep .mat-mdc-form-field{
+    width: 400px;
+}
+
+:host::ng-deep .mdc-text-field--filled:not(.mdc-text-field--disabled) .mdc-floating-label {
+    color: rgb(255, 255, 255);
+}
+:host::ng-deep .mdc-text-field--filled:not(.mdc-text-field--disabled){
+    background-color: #258D19;
+    border-radius: 20px;
+}
+
+
+:host::ng-deep .mdc-text-field--filled:not(.mdc-text-field--disabled).mdc-text-field--focused .mdc-floating-label, .mdc-text-field--filled:not(.mdc-text-field--disabled).mdc-text-field--focused .mdc-floating-label--float-above{
+    color: #ffffff;/*color del label pequeno superior*/
+}
+
+:host::ng-deep .mdc-text-field--filled:not(.mdc-text-field--disabled) .mdc-text-field__input {
+    color: #ffffff;/*color del texto de entrada*/
+}

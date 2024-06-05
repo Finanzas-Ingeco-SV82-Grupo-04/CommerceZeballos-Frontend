@@ -1,0 +1,108 @@
+.example-container {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+  }
+  
+  .example-is-mobile .example-toolbar {
+    position: fixed;
+    /* Make sure the toolbar will stay on top of the content as it scrolls past. */
+    z-index: 2;
+  }
+  .example-toolbar{
+    background-color: #258D19;
+  }
+  
+  h1.example-app-name {
+    margin-left: 8px;
+    font-size: 24px;
+  }
+  
+  .example-sidenav-container {
+    /* When the sidenav is not fixed, stretch the sidenav container to fill the available space. This
+       causes `<mat-sidenav-content>` to act as our scrolling element for desktop layouts. */
+    flex: 1;
+  }
+  
+  .example-is-mobile .example-sidenav-container {
+    /* When the sidenav is fixed, don't constrain the height of the sidenav container. This allows the
+       `<body>` to be our scrolling element for mobile layouts. */
+    flex: 1 0 auto;
+  }
+
+
+  /*AQUI PARA EL LIST*/
+.mat-sidenav {
+    background-color: #258D19;
+    width:200px; /* Ancho del 80% del contenedor padre */
+}
+.container-profile {
+  margin-bottom: 15%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  text-align: center; /* Centra el contenido horizontalmente */
+  gap:5px;
+}
+.container-image-profile{
+  width: 130px;
+  height: 130px;
+  border-radius: 50%;
+  overflow: hidden;
+  img {
+    width: 100%;
+    height: 100%;
+  }
+}
+
+.container-profile .item-profile{
+  font-size: 12px;
+  text-decoration: none;
+  color: rgb(255, 255, 255);
+}
+
+
+
+.example-mat-nav-list .item-list i {
+  margin-right: 5px; /* Ajusta el espacio entre el icono y el texto */
+}
+
+
+
+.example-mat-nav-list .item-list {
+  margin-bottom: 10px;
+  margin-left: 25px;
+  width: 100%;
+
+  padding-bottom: 8px;
+  padding-top: 8px;
+ /*padding-left: 80px;*/
+  font-size: 14px;
+  text-decoration: none; /* Quita la línea debajo del texto */
+  color: rgb(255, 255, 255); /* Cambia el color del texto a rojo */
+  align-items: center;
+}
+
+
+.example-mat-nav-list {
+  display: flex;
+  flex-direction: column;
+  overflow-x: hidden;
+  height: 100%;
+}
+.example-mat-nav-list .item-list.activebutton,
+.example-mat-nav-list .item-list.activebutton:hover {
+  background-color: #ffffff; /* Cambia el fondo cuando el botón está activo */
+  color: #258D19; /* Cambia el color del texto cuando el botón está activo */
+  transform: scale(1.1); /* Agrega una transformación de escala cuando el botón está activo */
+  transition: background-color 0.6s ease, color 0.6s ease, transform 0.6s ease; /* Agrega una transición suave */
+  padding-left: 25px;
+  margin-left: 0;
+  font-size: 16px;
+
+}

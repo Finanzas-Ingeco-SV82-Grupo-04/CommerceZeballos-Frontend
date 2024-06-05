@@ -1,0 +1,62 @@
+<div class="principle-container">
+    
+    <div class="background-img">
+        <img src="../../../../../assets/images/image-sigin-admin.png" alt="image to login page">
+    </div>
+
+   <div class="form-login">
+
+    
+
+    
+    <div class="card-container">
+        <mat-card class="example-card white-card">
+
+            <h1>Bienvenido Zeballos</h1>
+
+            <!--input para eusuario y password-->
+            <form [formGroup]="signinForm" class="sigin-form" (ngSubmit)="onSumitLogin()">
+                <mat-form-field class="example-full-width">
+                  <mat-label>Correo electronico</mat-label>
+                  <input type="email" matInput formControlName="email" placeholder="Correo electronico">
+                    @if (signinForm.get('email')?.hasError('required')) {
+                        <mat-error>El correo electronico es <strong>requerido</strong></mat-error>
+                    }
+                    @if (signinForm.get('email')?.hasError('email')) {
+                        <mat-error>El correo electronico no es <strong>valido</strong></mat-error>
+                    }
+                </mat-form-field>
+
+                <mat-form-field class="example-full-width">
+                  <mat-label>Contraseña</mat-label>
+                  <input type="password" matInput formControlName="password" placeholder="Contraseña">
+                  @if (signinForm.get('password')?.hasError('required')) {
+                    <mat-error>La contraseña es <strong>requerida</strong></mat-error>
+                  }
+                </mat-form-field>
+
+                <button mat-raised-button color="primary" type="submit" [disabled]="!signinForm.valid">
+                    Ingresar
+                </button>
+              </form>
+
+              
+              
+            
+
+        
+        </mat-card>
+      
+        <div class="example-card green-card"></div>
+      </div>
+      
+
+    
+
+
+   </div>
+</div>
+
+
+
+  
