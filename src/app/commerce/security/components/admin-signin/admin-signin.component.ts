@@ -4,6 +4,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import {MatInputModule} from '@angular/material/input';
 import {MatFormFieldModule} from '@angular/material/form-field';
+import { SigninService } from '../../services/signin.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-admin-signin',
@@ -17,7 +19,7 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 export class AdminSigninComponent {
   signinForm: FormGroup = new FormGroup({});
 
-  constructor(private fb: FormBuilder) { }
+  constructor(private fb: FormBuilder, private siginService: SigninService, private router:Router) { }
 
 
 
@@ -30,6 +32,27 @@ export class AdminSigninComponent {
 
 
   onSumitLogin(){
+
+    if(this.signinForm.valid){
+
+      const requestLogin = this.signinForm.value;
+
+      this.siginService.signIn(requestLogin).subscribe(
+        {
+          next: (response) => {
+           
+              localStorage.setItem('token', response.token);
+              this.router.navigate(['/admin/register-client']);
+            
+          },
+          error: (error) => {
+            if(error.status === 401){
+              alert('Invalid email or password');
+            }
+          }
+        }
+      )
+    }
 
   }
 

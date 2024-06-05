@@ -1,21 +1,23 @@
 import { Routes } from '@angular/router';
 import { AdminSigninComponent } from './commerce/security/components/admin-signin/admin-signin.component';
 import { ClientSigninComponent } from './commerce/security/components/client-signin/client-signin.component';
+import { RegisterClientComponent } from './commerce/register-client/components/register-client/register-client.component';
+import { HeaderAdminComponent } from './commerce/header-admin/components/header-admin/header-admin.component';
 
 export const routes: Routes = [
 
-    {path: '', redirectTo: 'dashboard-admin/login', pathMatch: 'full'},//default route
+    {path: 'client-login', component: ClientSigninComponent},
+    
+    {path: 'admin-login', component: AdminSigninComponent},
+    {path: '', redirectTo: 'admin-login', pathMatch: 'full'},//default route
 
-    {path: 'login', component: ClientSigninComponent},
 
 
-    {path: 'dashboard-admin', 
+    {path: 'admin', component: HeaderAdminComponent,
         children: [
-            {path: 'login', component: AdminSigninComponent},
-            //{path: 'users', component: UsersComponent},
-            //{path: 'roles', component: RolesComponent},
-           // {path: 'permissions', component: PermissionsComponent},
-            //{path: 'settings', component: SettingsComponent},
+            {path: '', redirectTo:'register-client', pathMatch: 'full'},
+            {path: 'register-client', component: RegisterClientComponent},
+            //aqui iran las rutas hijas
         ]
     },
 
