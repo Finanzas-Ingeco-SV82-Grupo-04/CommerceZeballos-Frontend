@@ -4,7 +4,7 @@ import { ClientSigninComponent } from './commerce/security/components/client-sig
 
 export const routes: Routes = [
 
-    {path: '', redirectTo: '/login', pathMatch: 'full'},//default route
+    {path: '', redirectTo: 'dashboard-admin/login', pathMatch: 'full'},//default route
 
     {path: 'login', component: ClientSigninComponent},
 
