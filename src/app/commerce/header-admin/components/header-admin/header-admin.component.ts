@@ -15,29 +15,35 @@ import { ViewChild } from '@angular/core';
   imports: [MatToolbarModule, MatButtonModule, MatIconModule, MatSidenavModule, MatListModule,
              RouterLink, RouterLinkActive, RouterOutlet
           ],
+
   templateUrl: './header-admin.component.html',
   styleUrl: './header-admin.component.css'
 })
 export class HeaderAdminComponent {
   mobileQuery: MediaQueryList;
 
-  @ViewChild('snav') snav!: MatSidenav; // Importante: asegúrate de tener el import correspondiente
+  @ViewChild('snav') snav!: MatSidenav;
 
   private _mobileQueryListener: () => void;
 
   constructor(changeDetectorRef: ChangeDetectorRef, media: MediaMatcher) {
     this.mobileQuery = media.matchMedia('(max-width: 600px)');
     this._mobileQueryListener = () => changeDetectorRef.detectChanges();
-    this.mobileQuery.addEventListener('change', this._mobileQueryListener);
+    this.mobileQuery.addListener(this._mobileQueryListener); // Cambié addEventListener a addListener
   }
 
   ngOnDestroy(): void {
-    this.mobileQuery.removeEventListener('change', this._mobileQueryListener);
+    this.mobileQuery.removeListener(this._mobileQueryListener); // Cambié removeEventListener a removeListener
   }
 
   toggleSidenav(): void {
     this.snav.toggle();
   }
+
+  logout(): void {
+    
+  }
+  
 
 
 }

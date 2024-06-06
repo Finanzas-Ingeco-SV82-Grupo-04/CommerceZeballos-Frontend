@@ -1,13 +1,15 @@
 <div class="example-container" [class.example-is-mobile]="mobileQuery.matches">
-    <mat-toolbar color="primary" class="example-toolbar">
+   
+      <mat-toolbar   class="example-toolbar ">
         
-      @if (mobileQuery.matches) {
-        <button mat-icon-button  (click)="toggleSidenav()">
-            <mat-icon>menu</mat-icon>
-          </button>
-      }
-      <h1 class="example-app-name">Hola Zeballos</h1>
-    </mat-toolbar>
+        @if (mobileQuery.matches) {
+          <button mat-icon-button  (click)="toggleSidenav()">
+              <mat-icon style="color: white;">menu</mat-icon>
+            </button>
+        }
+        <h1 class="example-app-name">Hola Zeballos</h1>
+      </mat-toolbar>
+    
   
     <mat-sidenav-container class="example-sidenav-container" [style.marginTop.px]="mobileQuery.matches ? 56 : 0">
       <mat-sidenav #snav [mode]="mobileQuery.matches ? 'over' : 'side'"
@@ -41,10 +43,19 @@
             <i class="fa-solid fa-store"></i>
             Productos
           </a>
+
+          <div class="container-logout" alt>
+            <a class="item-list-logout" (click)="logout()">
+              <i class="fa-solid fa-sign-out"></i>
+              Salir
+            </a>
+          </div>
+
+
         </mat-nav-list>
       </mat-sidenav>
   
-      <mat-sidenav-content>
+      <mat-sidenav-content class="content-shadow">
         <router-outlet></router-outlet>
       </mat-sidenav-content>
     </mat-sidenav-container>
