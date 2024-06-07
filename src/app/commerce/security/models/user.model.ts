@@ -9,3 +9,12 @@ export interface userSignInResponse{
     token:string; 
 }
 
+
+export interface registerClient{
+    firstname:string;
+    lastname:string;
+    email:string;
+    password:string;
+    dni:string;
+    phone:string;
+}

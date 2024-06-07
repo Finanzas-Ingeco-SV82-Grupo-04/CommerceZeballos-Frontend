@@ -1,1 +1,249 @@
-<p>register-client works!</p>
+<div class="container-principale">
+
+    <div class="title">
+        <h1>Registrar un nuevo cliente</h1>
+    </div>
+
+    <div class="second-container">
+
+        <div class="title-form-client">
+            <h2>Datos personales</h2>
+        </div>
+
+        <form [formGroup]="registerClientForm"  class="register-form-client">
+           <div class="subcontainer">
+                <div class="subcontainer-form">
+                    <div class="description">
+                        <h4>Nombres: </h4>
+                    </div>
+                    
+
+                    <mat-form-field  class="example-full-width">
+                        <input  matInput formControlName="firstname" placeholder="Ingresa los nombres"  >
+                        @if (registerClientForm.get('firstname')?.hasError('required')) {
+                            <mat-error>El nombre es <strong>requerido</strong></mat-error>
+                        }
+                    </mat-form-field>
+                </div>
+            
+                <div class="subcontainer-form">
+                    <div class="description">
+                        <h4>Apellidos: </h4>
+                    </div>
+                    <mat-form-field  class="example-full-width">
+                        <input  matInput formControlName="lastname" placeholder="Ingresa los apellidos"  >
+                        @if (registerClientForm.get('lastname')?.hasError('required')) {
+                            <mat-error>El apellido es <strong>requerido</strong></mat-error>
+                        }
+                    </mat-form-field>
+                </div>
+           </div>
+
+           <div class="subcontainer">
+                <div class="subcontainer-form">
+                    <div class="description">
+                        <h4>Dni: </h4>
+                    </div>
+                    <mat-form-field  class="example-full-width">
+                        <input type="text"  matInput formControlName="dni" placeholder="Ingresa su dni"  >
+                        @if (registerClientForm.get('dni')?.hasError('required')) {
+                            <mat-error>El dni es <strong>requerido</strong></mat-error>
+                        }
+                        @if (registerClientForm.get('dni')?.hasError('minlength') || registerClientForm.get('dni')?.hasError('maxlength')) {
+                            <mat-error>El dni debe tener 8 digitos</mat-error>
+                        }
+                        @if (registerClientForm.get('dni')?.hasError('pattern')) {
+                            <mat-error>El dni solo debe tener numeros</mat-error>
+                        }
+
+
+                    </mat-form-field>
+                </div>
+
+                <div class="subcontainer-form">
+                    <div class="description">
+                        <h4>Correo: </h4>
+                    </div>
+                    <mat-form-field  class="example-full-width">
+                        <input  matInput formControlName="email" placeholder="Ingresa su correo"  >
+                        @if (registerClientForm.get('email')?.hasError('required')) {
+                            <mat-error>El correo es <strong>requerido</strong></mat-error>
+                        }
+                        @if (registerClientForm.get('email')?.hasError('email')) {
+                            <mat-error>El correo no es <strong>valido</strong></mat-error>
+                        }
+                        
+                    </mat-form-field>
+                </div>
+           </div>
+
+            <div class="subcontainer-form">
+                <div class="description">
+                    <h4>Telefono: </h4>
+                </div>
+                <mat-form-field  class="example-full-width">
+                    <input  matInput formControlName="phone" placeholder="Ingresa su telefono"  >
+                    @if (registerClientForm.get('phone')?.hasError('required')) {
+                        <mat-error>El telefono es <strong>requerido</strong></mat-error>
+                    }
+                    @if (registerClientForm.get('phone')?.hasError('pattern')) {
+                        <mat-error>El telefono no es valido</mat-error>
+                    }
+                    @if (registerClientForm.get('phone')?.hasError('minlength') || registerClientForm.get('phone')?.hasError('maxlength')) {
+                        <mat-error>El dni debe tener 9 digitos</mat-error>
+                    }
+                </mat-form-field>
+            </div>
+
+            <div class="subcontainer">
+                <div class="subcontainer-form">
+                    <div class="description">
+                        <h4>Contraseña: </h4>
+                    </div>
+                    <mat-form-field  class="example-full-width">
+                        <input type="password"  matInput formControlName="password" placeholder="Ingresa su contraseña"  >
+                        @if (registerClientForm.get('password')?.hasError('required')) {
+                            <mat-error>La contraseña es <strong>requerido</strong></mat-error>
+                        }
+                       
+                        @if (registerClientForm.get('password')?.hasError('minlength')) {
+                            <mat-error>La contraseña debe tener minimo 6 caracteres</mat-error>
+                        }
+                    </mat-form-field>
+                </div>
+    
+                <div class="subcontainer-form">
+                    <div class="description">
+                        <h4>Confirmar contraseña: </h4>
+                    </div>
+                    <mat-form-field  class="example-full-width">
+                        <input type="password"  matInput formControlName="confirmPassword" placeholder="Confirmar contraseña" >
+                        @if (registerClientForm.get('confirmPassword')?.hasError('required')) {
+                            <mat-error>La contraseña es <strong>requerido</strong></mat-error>
+                        }
+                        @if (registerClientForm.hasError('mustBeEqual')) {
+                            <mat-error>Las contraseñas no coinciden</mat-error>
+                        }
+
+                    </mat-form-field>
+                </div>
+            </div>
+
+          
+               
+            
+
+        </form>
+
+
+
+        <div class="title-form-account">
+            <h2>Cuenta a configurar</h2>
+        </div>
+
+        
+
+        <form [formGroup]="registerAccountForm"  class="register-form-account" (ngSubmit)="onSubmit()">
+            <div class="subcontainer-account">
+
+                <div class="subcontainer-form-account dropdown ">
+                    <div class="description">
+                        <h4>Tipo de tasa de interes: </h4>
+                    </div>
+                   
+                    <div ngbDropdown placement="top-end" class="d-inline-block">
+                        <button type="button" style="border-color: #cecece;color: rgb(255, 255, 255); background-color: #cecece;" class="btn btn-outline-primary" id="dropdownBasic2" ngbDropdownToggle>
+                            {{registerAccountForm.get('typeInterest')?.value || 'Seleccionar'}}
+                        </button>
+                        <div ngbDropdownMenu aria-labelledby="dropdownBasic2">
+                            @for (type of typeInterest; track $index) {
+                                <button type="button" ngbDropdownItem (click)="selectTypeInterest(type.value)">
+                                    {{type.viewValue}}
+                                </button>
+                            }
+                        </div>
+                        @if (registerAccountForm.get('typeInterest')?.hasError('required')) {
+                            <mat-error>Escoge una opcion</mat-error>
+                        }
+                    </div>
+                    
+                </div>
+
+
+                <div class="subcontainer-form-account">
+                    <div class="description">
+                        <h4>Tasa moratoria %: </h4>
+                    </div>
+                    <mat-form-field  class="number">
+                        <input  matInput formControlName="moratoriumRate" placeholder="0" >
+                        @if (registerAccountForm.get('moratoriumRate')?.hasError('required')) {
+                            <mat-error>Dato <strong>requerido</strong></mat-error>
+                        }
+                    </mat-form-field>
+
+
+                </div>
+             
+           </div>
+
+           <div class="subcontainer-account">
+            <div class="subcontainer-form-account">
+                <div class="description">
+                    <h4>Limite de Credito (S/.): </h4>
+                </div>
+                <mat-form-field  class="number">
+                    <input  matInput formControlName="creditLimit" placeholder="0" >
+                    @if (registerAccountForm.get('creditLimit')?.hasError('required')) {
+                        <mat-error>Dato <strong>requerido</strong></mat-error>
+                    }
+                    @if (registerAccountForm.hasError('limitCreditValidator')) {
+                        <mat-error>Max. S/.200</mat-error>
+                    }
+                </mat-form-field>
+            </div>
+            <div class="subcontainer-form-account">
+                <div class="description">
+                    <h4>Dia de pago: </h4>
+                </div>
+                <mat-form-field  class="number">
+                    <input  matInput formControlName="paymentDay" placeholder="0" >
+                    @if (registerAccountForm.get('paymentDay')?.hasError('required')) {
+                        <mat-error>Dato <strong>requerido</strong></mat-error>
+                    }
+                    @if (registerAccountForm.hasError('limitPaymentDayValidator')) {
+                        <mat-error>Entre 1-28</mat-error>
+                    }
+                </mat-form-field>
+            </div>
+         
+       </div>
+
+
+       <div class="subcontainer-form-account">
+            <div class="description">
+                <h4>Tasa de interes %: </h4>
+            </div>
+            <mat-form-field  class="number">
+                <input  matInput formControlName="interestRate" placeholder="0" >
+                @if (registerAccountForm.get('interestRate')?.hasError('required')) {
+                    <mat-error>Dato <strong>requerido</strong></mat-error>
+                }
+            </mat-form-field>
+        </div>
+
+      
+       <div class="container-button">
+        <button class="buttonSubmit" type="submit" mat-flat-button  style="color: rgb(255, 255, 255); background-color: #258D19;" >
+            Registrar cliente
+        </button>
+       </div>
+     
+
+
+     
+        </form>
+
+    </div>
+
+</div>
+

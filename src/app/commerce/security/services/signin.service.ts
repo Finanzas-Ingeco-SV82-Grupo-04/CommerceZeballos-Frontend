@@ -3,7 +3,7 @@ import { environment } from '../../../../environments/environment.development';
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
-import { signInRequest, userSignInResponse } from '../models/user.model';
+import { registerClient, signInRequest, userSignInResponse } from '../models/user.model';
 import { ApiResponse } from '../../../../shared/api-response.model';
 
 @Injectable({
@@ -26,6 +26,11 @@ export class SigninService {
   signIn(body:signInRequest): Observable<userSignInResponse>{
 
     return this.http.post<userSignInResponse>(`${this.BASE_URL}auth/user/sign-in`, body);
+  }
+
+
+  registerClient(body: registerClient ): Observable<ApiResponse<any>>{
+    return this.http.post<ApiResponse<any>>(`${this.BASE_URL}auth/client/sign-up`, body);
   }
 
 
