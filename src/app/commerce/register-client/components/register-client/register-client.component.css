@@ -1,0 +1,185 @@
+.container-principale{
+    width: 100%;
+    height: 100%;
+}
+
+.title{
+    font-size: 30px;
+    font-weight: bold;
+    border-bottom: 3px solid #258D19;
+    h1{
+        margin: 0;
+        color: #258D19 ;
+    }
+}
+
+.second-container{
+    width: 100%;
+    height: 100%;
+    padding: 30px;
+
+}
+
+.title-form-client {
+    text-align: center;
+    h2{
+        color: black;
+        font-family:Arial, Helvetica, sans-serif     ;
+    }
+}
+
+
+
+.subcontainer{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.subcontainer-form{
+    width: auto;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    align-items: center;
+}
+
+
+.subcontainer-form .description{
+    width: 150px;
+}
+
+
+:host::ng-deep .mat-mdc-form-field{
+    width: 300px;
+    height: 70px;
+}
+
+:host::ng-deep .mdc-text-field--filled:not(.mdc-text-field--disabled) .mdc-floating-label {
+    color: rgb(0, 0, 0);
+}
+:host::ng-deep .mdc-text-field--filled:not(.mdc-text-field--disabled){
+    background-color: #cecece;
+    border-radius: 10px;
+}
+
+
+:host::ng-deep .mdc-text-field--filled:not(.mdc-text-field--disabled) .mdc-text-field__input {
+    color: #000000;/*color del texto de entrada*/
+}
+
+
+.title-form-account{
+    margin-top: 25px;
+    text-align: center;
+    h2{
+        color: black;
+        font-family:Arial, Helvetica, sans-serif     ;
+    }
+}
+
+
+
+.register-form-account{
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+}
+
+
+.subcontainer-account{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 50px;
+}
+
+.subcontainer-form-account{
+    width: auto;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    align-items: center;
+}
+
+
+.subcontainer-form-account .description{
+    width: 190px;
+}
+
+:host::ng-deep .number.mat-mdc-form-field{
+    width: 125px;
+    height: 70px;
+}
+:host::ng-deep .number.mdc-text-field--filled:not(.mdc-text-field--disabled){
+    background-color: #cecece;
+    border-radius: 10px;
+}
+
+
+
+/*Media Queries*/
+@media screen and (max-width: 768px){
+    :host::ng-deep .mat-mdc-form-field{
+        width: 100%;
+        height: 70px;
+    }
+    .second-container{
+        padding: 10px;
+    
+    }
+    .subcontainer{
+        flex-direction: column;
+        gap: 0px;
+    }
+    .subcontainer-form{
+        flex-direction: column;
+        gap: 0px;
+        align-items:first baseline ;
+
+        .description{
+            width: 100%;
+            h4{
+                margin: 0;
+            }
+        }
+    }
+    .subcontainer-account{
+        gap: 0px;
+        
+    }
+    .subcontainer-form-account{
+        gap: 0px;
+        align-items:first baseline ;
+
+        .description h4{
+            margin: 0;
+        }
+    }
+    .dropdown{
+        margin-bottom: 20px;
+    }
+}
+
+
+.container-button{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.buttonSubmit{
+    width: 269px;
+    height: 58px;
+    background-color: #258D19;
+    color: white;
+    font-family: "Actor";
+    font-weight: 400;
+    font-style: normal;
+    letter-spacing: 0px;
+
+    font-size: 24px;
+    border-radius: 10px;
+    margin :20px;
+    cursor: pointer;
+}
