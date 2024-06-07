@@ -1,0 +1,10 @@
+<table mat-table class="mat-elevation-z8">
+  <!-- Definición de columnas para Fecha, Compras, Pagos, Saldo -->
+  <ng-container matColumnDef="fecha"><th mat-header-cell *matHeaderCellDef> Fecha </th></ng-container>
+  <ng-container matColumnDef="compras"><th mat-header-cell *matHeaderCellDef> Compras </th></ng-container>
+  <ng-container matColumnDef="pagos"><th mat-header-cell *matHeaderCellDef> Pagos </th></ng-container>
+  <ng-container matColumnDef="saldo"><th mat-header-cell *matHeaderCellDef> Saldo </th></ng-container>
+
+  <!-- Definición de las filas de la tabla -->
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+</table>
