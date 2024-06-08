@@ -3,12 +3,10 @@ export interface signInRequest{
     password:string;
 }
 
-
 export interface userSignInResponse{
     Message:string;
-    token:string; 
+    token:string;
 }
-
 
 export interface registerClient{
     firstname:string;
