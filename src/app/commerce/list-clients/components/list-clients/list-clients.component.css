@@ -1,6 +1,27 @@
-p {
-  font-size: 40px;
-  font-weight: bold;
+mat-toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+mat-form-field {
+  flex-grow: 1;
+  margin-right: 10px;
+}
+
+mat-table {
+  width: 100%;
+  margin-top: 20px;
+}
+
+mat-header-cell, mat-cell {
+  text-align: left;
+}
+
+button {
+  margin-right: 10px;
+}
+
+mat-icon {
   color: black;
-  text-align: center;
 }

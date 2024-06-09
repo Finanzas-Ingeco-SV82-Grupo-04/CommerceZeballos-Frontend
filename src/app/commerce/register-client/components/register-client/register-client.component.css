@@ -126,7 +126,7 @@
     }
     .second-container{
         padding: 10px;
-    
+
     }
     .subcontainer{
         flex-direction: column;
@@ -146,7 +146,7 @@
     }
     .subcontainer-account{
         gap: 0px;
-        
+
     }
     .subcontainer-form-account{
         gap: 0px;

@@ -1,1 +1,33 @@
-<p>list-clients works!</p>
+<mat-toolbar color="white">
+  <mat-form-field appearance="fill">
+    <mat-label>Buscar</mat-label>
+    <input matInput type="search" [(ngModel)]="searchTerm">
+    <button mat-icon-button matSuffix>
+      <mat-icon>search</mat-icon>
+    </button>
+  </mat-form-field>
+</mat-toolbar>
+
+<mat-table [dataSource]="dataSource" matSort>
+  <ng-container matColumnDef="name">
+    <mat-header-cell *matHeaderCellDef mat-sort-header>Nombres y apellidos</mat-header-cell>
+    <mat-cell *matCellDef="let client">{{ client.firstname }} {{ client.lastname }}</mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="dni">
+    <mat-header-cell *matHeaderCellDef mat-sort-header>DNI</mat-header-cell>
+    <mat-cell *matCellDef="let client">{{ client.dni }}</mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="actions">
+    <mat-header-cell *matHeaderCellDef></mat-header-cell>
+    <mat-cell *matCellDef="let client">
+      <button mat-raised-button color="primary" (click)="viewDetails(client)">Ver detalles</button>
+      <button mat-raised-button color="warn" (click)="deleteUser(client)">Eliminar</button>
+    </mat-cell>
+  </ng-container>
+
+  <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+  <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+</mat-table>
+
