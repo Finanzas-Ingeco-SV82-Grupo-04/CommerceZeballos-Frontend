@@ -9,7 +9,6 @@ import { MatButtonModule } from "@angular/material/button";
 import { MatSortModule } from "@angular/material/sort";
 import { FormsModule } from "@angular/forms";
 import {ListClientsService} from "../../services/list-clients.service";
-import {BrowserModule} from "@angular/platform-browser";
 import {HttpClientModule} from "@angular/common/http";
 
 @Component({
@@ -25,9 +24,7 @@ import {HttpClientModule} from "@angular/common/http";
     MatSortModule,
     FormsModule,
     MatLabel,
-    //BrowserModule,
     HttpClientModule,
-
   ],
   templateUrl: './list-clients.component.html',
   styleUrls: ['./list-clients.component.css']
@@ -53,13 +50,13 @@ export class ListClientsComponent implements OnInit {
   }
 
   deleteUser(client: Client): void {
-    if (confirm(`Are you sure you want to delete ${client.firstname} ${client.lastname}?`)) {
+    if (confirm(`¿estas seguro que quieres borrar a ${client.firstname} ${client.lastname}?`)) {
       this.clientService.deleteClient(client.dni).subscribe(() => {
         this.clients = this.clients.filter(c => c.dni !== client.dni);
         this.dataSource.data = this.clients;
-        alert('Client deleted successfully');
+        alert('Client eliminado satisfactoriamente');
       }, error => {
-        alert('Failed to delete client');
+        alert('No se pudo eliminar al cliente');
       });
     }
   }

@@ -16,7 +16,7 @@
                     <div class="description">
                         <h4>Nombres: </h4>
                     </div>
-                    
+
 
                     <mat-form-field  class="example-full-width">
                         <input  matInput formControlName="firstname" placeholder="Ingresa los nombres"  >
@@ -25,7 +25,7 @@
                         }
                     </mat-form-field>
                 </div>
-            
+
                 <div class="subcontainer-form">
                     <div class="description">
                         <h4>Apellidos: </h4>
@@ -72,7 +72,7 @@
                         @if (registerClientForm.get('email')?.hasError('email')) {
                             <mat-error>El correo no es <strong>valido</strong></mat-error>
                         }
-                        
+
                     </mat-form-field>
                 </div>
            </div>
@@ -105,13 +105,13 @@
                         @if (registerClientForm.get('password')?.hasError('required')) {
                             <mat-error>La contraseña es <strong>requerido</strong></mat-error>
                         }
-                       
+
                         @if (registerClientForm.get('password')?.hasError('minlength')) {
                             <mat-error>La contraseña debe tener minimo 6 caracteres</mat-error>
                         }
                     </mat-form-field>
                 </div>
-    
+
                 <div class="subcontainer-form">
                     <div class="description">
                         <h4>Confirmar contraseña: </h4>
@@ -129,9 +129,9 @@
                 </div>
             </div>
 
-          
-               
-            
+
+
+
 
         </form>
 
@@ -141,7 +141,7 @@
             <h2>Cuenta a configurar</h2>
         </div>
 
-        
+
 
         <form [formGroup]="registerAccountForm"  class="register-form-account" (ngSubmit)="onSubmit()">
             <div class="subcontainer-account">
@@ -150,14 +150,14 @@
                     <div class="description">
                         <h4>Tipo de tasa de interes: </h4>
                     </div>
-                   
+
                     <div ngbDropdown placement="top-end" class="d-inline-block">
-                        <button type="button" style="border-color: #cecece;color: rgb(255, 255, 255); background-color: #cecece;" class="btn btn-outline-primary" id="dropdownBasic2" ngbDropdownToggle>
+                        <button type="button" style="border-color: #cecece;color: rgb(0, 0, 0); background-color: #cecece;" class="btn btn-outline-primary" id="dropdownBasic2" ngbDropdownToggle>
                             {{registerAccountForm.get('typeInterest')?.value || 'Seleccionar'}}
                         </button>
                         <div ngbDropdownMenu aria-labelledby="dropdownBasic2">
                             @for (type of typeInterest; track $index) {
-                                <button type="button" ngbDropdownItem (click)="selectTypeInterest(type.value)">
+                                <button type="button" ngbDropdownItem (click)="selectTypeInterest(type.value)" style="color: black">
                                     {{type.viewValue}}
                                 </button>
                             }
@@ -166,7 +166,7 @@
                             <mat-error>Escoge una opcion</mat-error>
                         }
                     </div>
-                    
+
                 </div>
 
 
@@ -183,7 +183,7 @@
 
 
                 </div>
-             
+
            </div>
 
            <div class="subcontainer-account">
@@ -215,7 +215,7 @@
                     }
                 </mat-form-field>
             </div>
-         
+
        </div>
 
 
@@ -231,16 +231,16 @@
             </mat-form-field>
         </div>
 
-      
+
        <div class="container-button">
         <button class="buttonSubmit" type="submit" mat-flat-button  style="color: rgb(255, 255, 255); background-color: #258D19;" >
             Registrar cliente
         </button>
        </div>
-     
 
 
-     
+
+
         </form>
 
     </div>
