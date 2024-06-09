@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
 import {MatTableDataSource, MatTableModule} from '@angular/material/table';
 import {Client} from '../../model/list-clients.model';
 import { MatToolbarModule } from "@angular/material/toolbar";
@@ -10,6 +10,8 @@ import {MatSort, MatSortModule} from "@angular/material/sort";
 import { FormsModule } from "@angular/forms";
 import {ListClientsService} from "../../services/list-clients.service";
 import {HttpClientModule} from "@angular/common/http";
+import {MatDialog, MatDialogModule} from "@angular/material/dialog";
+import {ConfirmationDialogComponent} from "../confirmation-dialog/confirmation-dialog.component";
 
 @Component({
   selector: 'app-list-clients',
@@ -24,20 +26,21 @@ import {HttpClientModule} from "@angular/common/http";
     MatSortModule,
     FormsModule,
     MatLabel,
+    MatDialogModule,
     HttpClientModule,
   ],
   templateUrl: './list-clients.component.html',
   styleUrls: ['./list-clients.component.css']
 })
 
-export class ListClientsComponent implements OnInit {
+export class ListClientsComponent implements OnInit, AfterViewInit {
   searchClients = '';
   clients: Client[] = [];
   displayedColumns: string[] = ['name', 'dni', 'actions'];
   dataSource = new MatTableDataSource<Client>(this.clients);
 
   @ViewChild(MatSort) sort!: MatSort;
-  constructor(private clientService: ListClientsService) {}
+  constructor(private clientService: ListClientsService, public dialog: MatDialog) {}
 
   ngOnInit(): void {
     this.getAllClients();
@@ -59,15 +62,22 @@ export class ListClientsComponent implements OnInit {
   }
 
   deleteUser(client: Client): void {
-    if (confirm(`¿estas seguro que quieres borrar a ${client.firstname} ${client.lastname}?`)) {
-      this.clientService.deleteClient(client.dni).subscribe(() => {
-        this.clients = this.clients.filter(c => c.dni !== client.dni);
-        this.dataSource.data = this.clients;
-        alert('Client eliminado satisfactoriamente');
-      }, error => {
-        alert('No se pudo eliminar al cliente');
-      });
-    }
+    const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
+      width: '300px',
+      data: { message: `¿Estás seguro que quieres borrar a ${client.firstname} ${client.lastname}?` }
+    });
+
+    dialogRef.afterClosed().subscribe((result: boolean | undefined) => {
+      if (result) {
+        this.clientService.deleteClient(client.dni).subscribe(() => {
+          this.clients = this.clients.filter(c => c.dni !== client.dni);
+          this.dataSource.data = this.clients;
+          //alert('Cliente eliminado satisfactoriamente');
+        }, error => {
+          alert('No se pudo eliminar al cliente');
+        });
+      }
+    });
   }
 
   viewDetails(client: Client): void {
