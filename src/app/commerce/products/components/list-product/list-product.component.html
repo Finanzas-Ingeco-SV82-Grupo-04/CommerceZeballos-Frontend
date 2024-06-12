@@ -1,0 +1,80 @@
+<div class="search">
+  <div class="container-search">
+    <div class="second-search">
+      <label for="typeahead-focus">Buscar:</label>
+      <div class="search-input">
+  
+        
+        <input
+          id="typeahead-focus"
+          type="text"
+          class="form-control"
+          [(ngModel)]="model"
+          [ngbTypeahead]="search"
+          (focus)="focus$.next($any($event).target.value)"
+          (click)="click$.next($any($event).target.value)"
+          (selectItem)="onProductSelected($event)"
+          #instance="ngbTypeahead"
+          placeholder="Escribe para buscar..."
+        />
+        <i class="fa-solid fa-magnifying-glass"></i>
+      </div>
+    </div>
+  
+   
+  </div>  
+  @if (noResults) {
+    <div class="product-not-found">
+      Producto no encontrado
+    </div>
+  }
+</div>
+
+
+
+<hr />
+
+
+<div class="cards-paginator">
+
+  <div class="container-cards">
+    @for (product of productsPage; track $index) {
+      
+      <mat-card class="example-card">
+        <mat-card-header>
+          <mat-card-title>{{product.name}}</mat-card-title>
+        </mat-card-header>
+        <img mat-card-image src={{product.imageUrl}} alt="{{product.description}}">
+        <mat-card-content class="container-content">
+          <p>
+            S/.{{product.price}} un
+            
+          </p>
+        </mat-card-content>
+        <mat-card-actions class="buttons-container">
+          <button class="button-edit" mat-button>Editar</button>
+          <button class="button-delete" mat-button>Eliminar</button>
+        </mat-card-actions>
+      </mat-card>
+      
+    }
+    
+    </div>
+
+    <ngb-pagination
+      [collectionSize]="totalProducts"
+      [(page)]="currentPageAll"
+      [pageSize]="pageSize"
+      [maxSize]="4"
+      [rotate]="true"
+      [ellipses]="false"
+      [boundaryLinks]="true"
+      (pageChange)="pageChanged($event)">
+      </ngb-pagination>
+</div>
+
+
+
+<div class="add-button-container">
+  <button class="button-add" mat-fab><i class="fa-solid fa-plus"></i></button>
+</div>
