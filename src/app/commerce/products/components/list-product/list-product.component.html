@@ -1,3 +1,4 @@
+
 <div class="search">
   <div class="container-search">
     <div class="second-search">
@@ -17,64 +18,135 @@
           #instance="ngbTypeahead"
           placeholder="Escribe para buscar..."
         />
-        <i class="fa-solid fa-magnifying-glass"></i>
+        @if (this.model) {
+          <i class="fa-solid fa-times" (click)="clearSearch()"></i>
+        }
+        @else {
+          <i class="fa-solid fa-magnifying-glass" ></i>
+        }
       </div>
     </div>
-  
-   
-  </div>  
+  </div> 
+
   @if (noResults) {
     <div class="product-not-found">
       Producto no encontrado
     </div>
   }
+
 </div>
-
-
 
 <hr />
 
+@defer (when (!loading && !errorDetected)) {
 
-<div class="cards-paginator">
-
-  <div class="container-cards">
-    @for (product of productsPage; track $index) {
+ @if (totalProducts>0) {
+  <div class="cards-paginator">
+  
+    <div class="container-cards">
+  
+      @if (!productSelectedSearch) {
+  
+        @for (product of productsPage; track $index) {
+          
+          <mat-card class="example-card">
+            <mat-card-header style="margin:0px; padding:0px">
+              <img mat-card-image src={{product.imageUrl}} alt="{{product.description}}">
+            </mat-card-header>
+            <mat-card-title style="margin-left:5px; width: 100%;">{{product.name}}</mat-card-title>
+            <mat-card-content class="container-content">
+              <p>
+                S/.{{product.price}} un     
+              </p>
+            </mat-card-content>
+            <mat-card-actions class="buttons-container">
+              <button class="button-edit" mat-button (click)="editProduct(product)">Editar</button>
+              <button class="button-delete" (click)="confirmeDeleteProduct(product.id)" mat-button>Eliminar</button>
+            </mat-card-actions>
+          </mat-card>
+  
+        }
+      }@else {
+        <mat-card class="example-card">
+          <mat-card-header>
+            <mat-card-title>{{productSelectedSearch.name}}</mat-card-title>
+          </mat-card-header>
+          <img mat-card-image src={{productSelectedSearch.imageUrl}} alt="{{productSelectedSearch.description}}">
+          <mat-card-content class="container-content">
+            <p>
+              S/.{{productSelectedSearch.price}} un
+            </p>
+          </mat-card-content>
+          <mat-card-actions class="buttons-container">
+            <button class="button-edit"  mat-button (click)="editProduct(productSelectedSearch)">Editar</button>
+            <button class="button-delete" (click)="confirmeDeleteProduct(productSelectedSearch.id)" mat-button>Eliminar</button>
+          </mat-card-actions>
+        </mat-card>
+      }
+  
+  
+  
       
-      <mat-card class="example-card">
-        <mat-card-header>
-          <mat-card-title>{{product.name}}</mat-card-title>
-        </mat-card-header>
-        <img mat-card-image src={{product.imageUrl}} alt="{{product.description}}">
-        <mat-card-content class="container-content">
-          <p>
-            S/.{{product.price}} un
-            
-          </p>
-        </mat-card-content>
-        <mat-card-actions class="buttons-container">
-          <button class="button-edit" mat-button>Editar</button>
-          <button class="button-delete" mat-button>Eliminar</button>
-        </mat-card-actions>
-      </mat-card>
-      
-    }
-    
-    </div>
-
-    <ngb-pagination
-      [collectionSize]="totalProducts"
-      [(page)]="currentPageAll"
-      [pageSize]="pageSize"
-      [maxSize]="4"
-      [rotate]="true"
-      [ellipses]="false"
-      [boundaryLinks]="true"
-      (pageChange)="pageChanged($event)">
+      </div>
+  
+      @if ( !productSelectedSearch ) {
+  
+        <ngb-pagination
+        [collectionSize]="totalProducts"
+        [(page)]="currentPageAll"
+        [pageSize]="pageSize"
+        [maxSize]="4"
+        [rotate]="true"
+        [ellipses]="false"
+        [boundaryLinks]="true"
+        (pageChange)="pageChanged($event)">
       </ngb-pagination>
-</div>
+    }
+  </div>
+  
+ }@else {
+  <div class="no-products">
+    <h4>No hay productos registrados</h4>
+  </div>
+ }
+  
+  
+  <div class="add-button-container">
+    <button class="button-add" routerLink="/admin/add-product" mat-fab><i class="fa-solid fa-plus"></i></button>
+  </div>
+
+  @if (loading) {
+    <app-loader [isLoading]="loading"></app-loader>
+  
+  }
+
+}@placeholder() {
+  @if (!errorDetected) {
+    <app-loader [isLoading]="loading"></app-loader>
+  }
+}
+
+@if (isConfirmedDelete) {
+
+  <div class="container-confirmDelete">
+
+    <div class="card-confirm-delete">
+        <i class="fa-solid fa-circle-exclamation"></i>
+      <h4>¿Estas seguro de eliminar el producto?</h4>
+
+      <div class="container-buttons">
+        <button mat-flat-button type="button" class="btn btn-danger" style="background-color: red;color: white;" (click)="deleteProduct()">Eliminar</button>
+      <button mat-flat-button type="button" class="btn btn-primary" style="background-color: #258D19 ;color: white;" (click)="cancelDelete()">Cancelar</button>
+    </div>
+  </div>
+
+  </div>
+}
+
+@if (errorDetected) {
+  <div class="error-container">
+    <h4>Ha ocurrido un error, intentalo mas tarde</h4>
+  </div>
+}
 
 
-
-<div class="add-button-container">
-  <button class="button-add" mat-fab><i class="fa-solid fa-plus"></i></button>
-</div>

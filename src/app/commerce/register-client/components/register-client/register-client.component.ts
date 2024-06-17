@@ -7,13 +7,7 @@ import { Router } from '@angular/router';
 import { NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
 import { RegisterAccountService } from '../../services/register-account.service';
 import { switchMap } from 'rxjs/operators';
-import {
-  MatSnackBar,
-  MatSnackBarAction,
-  MatSnackBarActions,
-  MatSnackBarLabel,
-  MatSnackBarRef,
-} from '@angular/material/snack-bar';
+import {MatSnackBar,} from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-register-client',

@@ -8,6 +8,9 @@ import { JsonPipe } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { ProductService } from '../../services/product.service';
+import { Router, RouterLink } from '@angular/router';
+import { LoaderComponent } from '../../../../../shared/components/loader/loader.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 
 
@@ -15,7 +18,7 @@ import { ProductService } from '../../services/product.service';
   selector: 'app-list-product',
   standalone: true,
   imports: [NgbTypeaheadModule, FormsModule, JsonPipe,MatCardModule, MatButtonModule,
-			NgbPaginationModule],
+			NgbPaginationModule, RouterLink, LoaderComponent],
   templateUrl: './list-product.component.html',
   styleUrl: './list-product.component.css'
 })
@@ -34,6 +37,12 @@ export class ListProductComponent {
   productSelectedSearch: Product | null= null;
   noResults: boolean = false;  // Add a flag for no results
 
+  loading: boolean = false;
+  errorDetected: boolean = false;
+
+  isConfirmedDelete: boolean = false;
+  idProductToDelete: number = 0;
+
 
   @ViewChild('instance', { static: true }) instance!: NgbTypeahead;//obtener la instancia del componente ngbTypeahead, instance es la referencia al componente NgbTypeahead y permite acceder a sus métodos y propiedades.
   focus$ = new Subject<string>();
@@ -41,7 +50,9 @@ export class ListProductComponent {
   
 
   constructor(
-    private productService: ProductService
+    private productService: ProductService,
+	private _snackBar: MatSnackBar,
+	private router: Router
   ) { }
 
   ngOnInit() {
@@ -51,14 +62,20 @@ export class ListProductComponent {
   }
 
   loadAllProducts(){
+	this.loading = true;
 	this.productService.getAllProducts(this.currentPageAll-1, this.pageSize).subscribe(
 		{
 		  next: (response) => {
-			this.productsPage = response.data.content;
-			this.totalProducts=response.data.totalElements;
+			if(response.success){
+				this.productsPage = response.data.content;
+				this.totalProducts = response.data.totalElements;
+				this.loading = false;
+			}
 		  },
 		  error: (error) => {
-			console.error(error);
+			
+			this.errorDetected = true;
+			this.loading = false;
 		  }	
 
 		}
@@ -88,9 +105,10 @@ export class ListProductComponent {
 		}
 		this.query = term;
 		this.currentPageSearch = 0;
-		return this.productService.searchProducts(this.query, this.currentPageSearch, this.pageSize).pipe(
+		return this.productService.searchProductsByName(this.query, this.currentPageSearch, this.pageSize).pipe(
 			map(response => {
 			  this.productsSearchList = response.data.content;
+			  console.log(this.productsSearchList)
 			  this.noResults = this.productsSearchList.length === 0;  // Update the flag based on search results
 			  return this.productsSearchList.map(product => product.name);
 			})
@@ -102,6 +120,7 @@ export class ListProductComponent {
 
 
   onProductSelected(selectedItem: NgbTypeaheadSelectItemEvent<Product>) {
+	console.log(this.model)
 	console.log(selectedItem);
 	const selectedProduct: any = selectedItem.item;
 		const foundProduct = this.productsSearchList.find(product => product.name === selectedProduct);
@@ -112,6 +131,57 @@ export class ListProductComponent {
 
 	}
   }
+
+  clearSearch() {
+	this.query = '';
+	this.model = '';
+	this.productSelectedSearch = null;
+	this.productsSearchList = [];
+	this.noResults = false;
+  }
+
+  confirmeDeleteProduct(productId: number){
+	this.isConfirmedDelete = true;
+	this.idProductToDelete = productId;
+  }
+
+  deleteProduct(){
+	this.isConfirmedDelete = false;
+	console.log(this.errorDetected)
+	this.loading = true;
+	this.productService.deleteProduct(this.idProductToDelete).subscribe(
+		{
+			next: (response) => {
+				if(response.success){
+					this.loadAllProducts();
+					this.loading = false;
+
+					this._snackBar.open("Producto eliminado", "Cerrar", {
+						duration: 2000,
+					  });
+					
+				}
+			},
+			error: (error) => {
+				this.loading = false;
+
+				this._snackBar.open("Ocurrio un error, intentalo denuevo", "Cerrar", {
+					duration: 2000,
+				  });
+			}
+		}
+	)
+  }
   
+  cancelDelete(){
+	this.isConfirmedDelete = false;
+	this.idProductToDelete = 0;
+  }
+
+  editProduct(product: Product){
+	this.productService.sendProductToEdit(product);
+
+	this.router.navigate(['/admin/edit-product',product.id]);
+  }
   
 }
