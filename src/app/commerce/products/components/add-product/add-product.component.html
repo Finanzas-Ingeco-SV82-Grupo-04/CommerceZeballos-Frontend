@@ -1,0 +1,91 @@
+<div class="container-principale">
+
+    <div class="title">
+        <h1>Registrar un nuevo producto</h1>
+    </div>
+
+    <div class="container-edit">
+
+        <form [formGroup]="registerProductForm" class="form-register-product" (submit)="SubmitProduct()">
+
+            <div class="subcontainer-form">
+                <div class="description">
+                    <h4>Nombre del producto: </h4>
+                </div>
+                
+
+                <mat-form-field  class="example-full-width">
+                    <input  matInput formControlName="name" placeholder="Ingresa el nombre del producto"  >
+                    @if (registerProductForm.get('name')?.hasError('required')) {
+                        <mat-error>El nombre es <strong>requerido</strong></mat-error>
+                    }
+                </mat-form-field>
+            </div>
+            <div class="subcontainer-form">
+                <div class="description">
+                    <h4>Descripcion:</h4>
+                </div>
+                
+
+                <mat-form-field  class="example-full-width">
+                    <input  matInput formControlName="description" placeholder="Ingresa la descripcion del producto"  >
+                    @if (registerProductForm.get('description')?.hasError('required')) {
+                        <mat-error>La descripcion es <strong>requerido</strong></mat-error>
+                    }
+                </mat-form-field>
+            </div>
+
+            <div class="subcontainer-form">
+                <div class="description">
+                    <h4>Precio: </h4>
+                </div>
+                
+
+                <mat-form-field  class="type-number">
+                    <input type="number" matInput formControlName="price" placeholder="00.00"  >
+                    @if (registerProductForm.get('price')?.hasError('required')) {
+                        <mat-error>El precio es <strong>requerido</strong></mat-error>
+                    }
+                </mat-form-field>
+            </div>
+
+            <div class="subcontainer-form image">
+                <div class="description">
+                    <h4>Seleccionar Imagen: </h4>
+                </div>
+                
+                <div class="container-image">
+
+                    <div class="container-image-preview">
+                        <img [src]="imagePreview ||'../../../../../assets/images/image-default.jpg'" alt="Vista previa de la imagen">
+
+                    </div>
+
+
+                    <input type="file" accept="image/*" formControlName="imageFile"  (change)="onFileSelected($event)"  style="display: none;" #fileInput>
+                    <button  type="button" style="color:#258D19 ;" mat-flat-button class="button-image" (click)="fileInput.click()">
+                        <i class="fa-regular fa-image"></i>
+                        Seleccionar
+                    </button>
+
+                    @if (registerProductForm.get('imageFile')?.hasError('required') && (registerProductForm.get('imageFile')?.touched || registerProductForm.get('imageFile')?.dirty)) {
+                        <mat-error style="font-size: 13px;">La imagen es <strong>requerida</strong></mat-error>
+                    }
+                </div>
+            </div>
+
+            <div class="container-buttons">
+                <button mat-flat-button type="button" class="btn btn-danger" style="background-color: red;color: white;" (click)="cancel()">Cancelar</button>
+                <button mat-flat-button type="submit" class="btn btn-primary" style="background-color: #258D19 ;color: white;">Añadir</button>
+            </div>
+        </form>
+
+        
+        
+
+    </div>
+
+
+</div>
+
+<app-loader [isLoading]="loading"></app-loader>
