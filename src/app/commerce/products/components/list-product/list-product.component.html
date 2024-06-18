@@ -1,5 +1,5 @@
 
-<div class="search">
+<div class="search" [style.view-transition-name]="'subcomponent'">
   <div class="container-search">
     <div class="second-search">
       <label for="typeahead-focus">Buscar:</label>
@@ -41,7 +41,7 @@
 @defer (when (!loading && !errorDetected)) {
 
  @if (totalProducts>0) {
-  <div class="cards-paginator">
+  <div class="cards-paginator" [style.view-transition-name]="'subcomponent'">
   
     <div class="container-cards">
   
