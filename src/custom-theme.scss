@@ -1,0 +1,19 @@
+@use '@angular/material' as mat;
+
+@include mat.core();
+$CommerceZeballosFrontend-primary: mat.define-palette(mat.$green-palette);
+$CommerceZeballosFrontend-accent: mat.define-palette(mat.$gray-palette, A700, A100, A400);
+$CommerceZeballosFrontend-warn: mat.define-palette(mat.$red-palette);
+
+$CommerceZeballosFrontend-theme: mat.define-light-theme((
+  color: (
+    primary: $CommerceZeballosFrontend-primary,
+    accent: $CommerceZeballosFrontend-accent,
+    warn: $CommerceZeballosFrontend-warn,
+  ),
+  density: 0
+));
+
+@include mat.all-component-themes($CommerceZeballosFrontend-theme);
+
+

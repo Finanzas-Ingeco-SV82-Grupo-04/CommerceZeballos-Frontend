@@ -43,11 +43,11 @@ export class RegisterClientComponent {
       dni: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(8),Validators.pattern(/^[0-8]*$/)]],
       password: ['', [Validators.required,Validators.minLength(6)]],
       confirmPassword: ['', Validators.required],
-      
+
     }, { validators: this.passwordMatchValidator })
 
 
-  
+
 
 
 
@@ -62,7 +62,7 @@ export class RegisterClientComponent {
       moratoriumRate: ['', Validators.required],//
       dniClient: ['', Validators.required],
     },{ validators: [this.limitCreditValidator, this.limitPaymentDayValidator] })
-   
+
   }
 
   passwordMatchValidator: ValidatorFn = (control: AbstractControl): { [key: string]: any } | null => {
@@ -94,7 +94,7 @@ export class RegisterClientComponent {
       // Return if another validator has already found an error on the confirmPassword
       return null;
     }
-    if (creditLimit.value > 200) {
+    if (creditLimit.value > 200 || creditLimit.value == 0) {
       creditLimit.setErrors({ limitCreditValidator: true });
       return { limitCreditValidator: true };
     } else {
@@ -148,7 +148,7 @@ export class RegisterClientComponent {
         this.registerAccountForm.get('moratoriumRate')?.setValue(parseFloat(this.registerAccountForm.get('moratoriumRate')?.value));
         this.registerAccountForm.get('paymentDay')?.setValue(parseFloat(this.registerAccountForm.get('paymentDay')?.value));
 
-        //convertir a local date 
+        //convertir a local date
         const paymentDate = new Date(this.registerAccountForm.get('paymentDate')?.value);
         const accountClosingDate = new Date(this.registerAccountForm.get('accountClosingDate')?.value);
         this.registerAccountForm.get('paymentDate')?.setValue(paymentDate);
@@ -165,7 +165,7 @@ export class RegisterClientComponent {
           dniClient: this.registerAccountForm.get('dniClient')?.value,
         };
 
-        
+
         //registro de cliente
        //  Dentro del método donde se realiza el registro del cliente
         this.registerClient.registerClient(dataClient).pipe(
@@ -176,6 +176,8 @@ export class RegisterClientComponent {
         ).subscribe({
           next: (accountResult: any) => {
             this.openSnackBar('Cuenta registrada con éxito');
+            this.registerClientForm.reset(); //Limpiar formulario una vez registrado al cliente
+            this.registerAccountForm.reset();
             // Realizar la navegación solo si se ha completado con éxito el registro de cliente y cuenta
             // this.router.navigate(['/login']);
           },
@@ -185,7 +187,7 @@ export class RegisterClientComponent {
         });
 
 
-      
+
       } else {
         console.log('El segundo formulario no es válido');
       }
@@ -210,7 +212,7 @@ export class RegisterClientComponent {
 
        let newMonth = month;
        let newYear = year;
-    
+
          newMonth = month + 1;
          if (newMonth > 12) {
            newMonth = 1;

@@ -19,15 +19,11 @@ export class SigninService {
   ) { }
 
 
-
-
-
   // Sign In
   signIn(body:signInRequest): Observable<userSignInResponse>{
 
     return this.http.post<userSignInResponse>(`${this.BASE_URL}auth/user/sign-in`, body);
   }
-
 
   registerClient(body: registerClient ): Observable<ApiResponse<any>>{
     return this.http.post<ApiResponse<any>>(`${this.BASE_URL}auth/client/sign-up`, body);
