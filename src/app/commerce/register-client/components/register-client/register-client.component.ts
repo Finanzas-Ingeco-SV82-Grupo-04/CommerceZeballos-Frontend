@@ -100,7 +100,7 @@ export class RegisterClientComponent {
       // Return if another validator has already found an error on the confirmPassword
       return null;
     }
-    if (creditLimit.value > 200) {
+    if (creditLimit.value > 200 || creditLimit.value == 0) {
       creditLimit.setErrors({ limitCreditValidator: true });
       return { limitCreditValidator: true };
     } else {
