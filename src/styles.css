@@ -1,8 +1,7 @@
 /* You can add global styles to this file, and also import other style files */
-@import '@angular/material/prebuilt-themes/indigo-pink.css';
-@import 'bootstrap/dist/css/bootstrap.min.css';
+@import "@angular/material/prebuilt-themes/indigo-pink.css";
+@import "bootstrap/dist/css/bootstrap.min.css";
 @import "custom-theme.scss";
-
 
 html,
 body {
@@ -13,6 +12,7 @@ body {
   font-family: Roboto, "Helvetica Neue", sans-serif;
 }
 
+/*
 @keyframes exit {
   0% {
     opacity: 1;
@@ -37,7 +37,6 @@ body {
   }
 }
 
-/* You can add global styles to this file, and also import other style files */
 ::view-transition-old(subcomponent) {
   animation: exit 500ms ease 0s 1 normal forwards;
 }
@@ -45,3 +44,4 @@ body {
 ::view-transition-new(subcomponent) {
   animation: enter 500ms ease 0s 1 normal forwards;
 }
+*/

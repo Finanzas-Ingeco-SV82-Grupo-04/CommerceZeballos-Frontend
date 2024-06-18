@@ -4,7 +4,7 @@ import { NgbPaginationModule, NgbTypeahead, NgbTypeaheadModule, NgbTypeaheadSele
 import { Observable, Subject, merge, OperatorFunction } from 'rxjs';
 import { debounceTime, distinctUntilChanged, filter, map, switchMap } from 'rxjs/operators';
 import { FormsModule } from '@angular/forms';
-import { JsonPipe } from '@angular/common';
+import { JsonPipe, NgOptimizedImage } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { ProductService } from '../../services/product.service';
@@ -18,7 +18,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   selector: 'app-list-product',
   standalone: true,
   imports: [NgbTypeaheadModule, FormsModule, JsonPipe,MatCardModule, MatButtonModule,
-			NgbPaginationModule, RouterLink, LoaderComponent],
+			NgbPaginationModule, RouterLink, LoaderComponent, NgOptimizedImage],
   templateUrl: './list-product.component.html',
   styleUrl: './list-product.component.css'
 })

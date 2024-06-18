@@ -1,5 +1,6 @@
-
-<div class="search" [style.view-transition-name]="'subcomponent'">
+<div class="container-principale"  >
+  
+<div class="search" >
   <div class="container-search">
     <div class="second-search">
       <label for="typeahead-focus">Buscar:</label>
@@ -51,7 +52,7 @@
           
           <mat-card class="example-card">
             <mat-card-header style="margin:0px; padding:0px">
-              <img mat-card-image src={{product.imageUrl}} alt="{{product.description}}">
+              <img mat-card-image src={{product.imageUrl}} alt="{{product.description}}" loading="lazy">
             </mat-card-header>
             <mat-card-title style="margin-left:5px; width: 100%;">{{product.name}}</mat-card-title>
             <mat-card-content class="container-content">
@@ -71,7 +72,7 @@
           <mat-card-header>
             <mat-card-title>{{productSelectedSearch.name}}</mat-card-title>
           </mat-card-header>
-          <img mat-card-image src={{productSelectedSearch.imageUrl}} alt="{{productSelectedSearch.description}}">
+          <img mat-card-image src={{productSelectedSearch.imageUrl}} alt="{{productSelectedSearch.description}}" loading="lazy">
           <mat-card-content class="container-content">
             <p>
               S/.{{productSelectedSearch.price}} un
@@ -149,4 +150,5 @@
   </div>
 }
 
+</div>
 

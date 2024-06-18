@@ -37,7 +37,7 @@
             Registrar cliente
           </a>
 
-          <a class="item-list" routerLink="/admin/products"
+          <a  class="item-list" routerLink="/admin/products"
              routerLinkActive="activebutton"
              [routerLinkActiveOptions]="{exact:true}">
             <i class="fa-solid fa-store"></i>
@@ -55,8 +55,13 @@
         </mat-nav-list>
       </mat-sidenav>
 
-      <mat-sidenav-content class="content-shadow">
-        <router-outlet></router-outlet>
+      <mat-sidenav-content class="content-shadow" >
+       
+       
+        <div class="content-wrapper" >
+           <router-outlet></router-outlet>
+       </div>       
+
       </mat-sidenav-content>
     </mat-sidenav-container>
   </div>
