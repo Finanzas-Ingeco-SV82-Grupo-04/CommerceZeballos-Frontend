@@ -1,0 +1,303 @@
+.container-principale {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.title {
+  width: 100%;
+  font-size: 30px;
+  font-weight: bold;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 3px solid #258d19;
+  h1 {
+    margin: 0;
+    color: #258d19;
+  }
+}
+
+.mat-mdc-button-base {
+  font-family: "Actor", sans-serif;
+  margin-bottom: 3px;
+  border-radius: 10px;
+  font-size: 16px;
+  letter-spacing: 1px;
+  width: 140px;
+}
+
+/*CONTAINER-LINE-BALANCE*/
+.container-line-balance {
+  width: 75%;
+  margin-top: 10px;
+}
+
+.subcontainer-titles-account {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+  h2 {
+    margin: 0;
+    font-size: 18px;
+    font-family: "Actor", sans-serif;
+  }
+}
+
+.container-line {
+  position: relative; /* Establece posición relativa para poder utilizar z-index */
+  padding: 0;
+  height: 55px;
+}
+
+.subcontainer-amounts {
+  position: absolute; /* Establece posición relativa */
+  z-index: 1; /* Establece un índice de apilamiento superior */
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  h2 {
+    font-size: 25px;
+    font-family: "Actor", sans-serif;
+  }
+}
+
+.line {
+  position: absolute; /* Establece posición relativa */
+  z-index: 0; /* Establece un índice de apilamiento más bajo */
+  width: 100%;
+  margin-top: 15px;
+  padding: 0;
+}
+/* Estilo para el slider cuando no es interactivo */
+.non-interactive-slider input[type="range"] {
+  cursor: none;
+  pointer-events: none; /* Desactiva los eventos de puntero, haciendo que el slider no sea interactivo */
+}
+
+.container-description-account {
+  p {
+    font-size: 12px;
+    font-family: "Actor", sans-serif;
+  }
+}
+
+/*TABLA DE TRANSACCIONES*/
+.container-transactions {
+  width: 100%;
+  margin-top: 20px;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.header-table {
+  width: 100%;
+  height: 53px;
+  background-color: #d9d9d9;
+  border-radius: 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  h2 {
+    font-size: 17px;
+    margin: 0px 0px 0px 10px;
+    font-family: "Actor", sans-serif;
+  }
+}
+.header-table .buttons {
+  display: flex;
+  gap: 15px;
+  margin: 0px 10px 0px 0px;
+  button {
+    font-size: 14px;
+    width: 150px;
+    border-radius: 10px;
+  }
+}
+
+.content-table {
+  height: auto;
+  width: 90%;
+  overflow: auto;
+}
+/* Estilo para las líneas divisorias entre filas de la tabla */
+.mat-table {
+  border-collapse: separate; /* Asegura que las celdas tengan bordes separados */
+}
+
+:host::ng-deep .mat-mdc-cell {
+  border-bottom-color: #258d19;
+}
+
+.mat-mdc-header-cell {
+  border-bottom-color: #ffffff;
+}
+
+:host::ng-deep .mdc-data-table__row:last-child .mat-mdc-cell {
+  margin-bottom: 10px;
+  border-bottom: #258d19 1px solid;
+}
+
+:host::ng-deep .mdc-data-table__cell,
+:host::ng-deep .mdc-data-table__header-cell {
+  padding: 0 0 0 16px;
+  padding-top: 0px;
+}
+:host::ng-deep .mat-mdc-paginator-page-size {
+  display: none;
+}
+:host::ng-deep .mat-mdc-paginator-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.column-title {
+  color: #258d19;
+}
+.button-table {
+  width: 110px;
+  height: 30px;
+  border-radius: 10px;
+  font-size: 12px;
+  font-family: "Actor", sans-serif;
+  background-color: #258d19;
+}
+
+/*BOTONES PARA LOS PAGOS*/
+
+.button-to-payments {
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+  margin-top: 20px;
+}
+.subcontainer-registry-new {
+  button {
+    width: 160px;
+    height: 53px;
+    border-radius: 10px;
+    font-size: 15px;
+    font-family: "Actor", sans-serif;
+  }
+}
+
+.subcontainer-payment {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+  h2 {
+    margin: 0;
+    font-size: 18px;
+    font-family: "Actor", sans-serif;
+  }
+  button {
+    width: 160px;
+    height: 53px;
+    border-radius: 10px;
+    font-size: 25px;
+    font-family: "Actor", sans-serif;
+  }
+}
+
+.details {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  h2 {
+    margin: 0;
+    font-size: 15px;
+    font-family: "Actor", sans-serif;
+  }
+}
+
+.no-data {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100px;
+  h2 {
+    font-size: 15px;
+    font-family: "Actor", sans-serif;
+    /*letra cursiva*/
+    font-style: italic;
+  }
+}
+
+/*Media queries*/
+@media (max-width: 768px) {
+  .title {
+    h1 {
+      font-size: 20px;
+    }
+  }
+
+  .mat-mdc-button-base {
+    font-size: 13px;
+    width: 120px;
+  }
+
+  /*CONTAINER-LINE-BALANCE*/
+  .container-line-balance {
+    width: 90%;
+  }
+
+  .subcontainer-titles-account {
+    margin-bottom: 0px;
+    h2 {
+      font-size: 15px;
+    }
+  }
+
+  .subcontainer-amounts {
+    h2 {
+      font-size: 18px;
+    }
+  }
+
+  .header-table {
+    height: auto;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    align-items: center;
+    h2 {
+      font-size: 15px;
+    }
+  }
+
+  .header-table .buttons {
+    margin: 0px 10px 0px 10px;
+    button {
+      font-size: 12px;
+      width: 130px;
+    }
+  }
+
+  .details {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px;
+    h2 {
+      margin: 0;
+      font-size: 15px;
+      font-family: "Actor", sans-serif;
+    }
+  }
+}

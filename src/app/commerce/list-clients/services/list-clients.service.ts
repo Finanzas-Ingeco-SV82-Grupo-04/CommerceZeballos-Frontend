@@ -3,6 +3,7 @@ import {environment} from "../../../../environments/environment.development";
 import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {Client} from "../model/list-clients.model";
+import { ApiResponse } from '../../../../shared/api-response.model';
 
 @Injectable({
   providedIn: 'root'
@@ -19,5 +20,9 @@ export class ListClientsService {
 
   deleteClient(dni: string): Observable<void> {
     return this.http.delete<void>(`${this.BASE_URL}clients/delete/${dni}`);
+  }
+
+  getClientByDni(dni: string): Observable<ApiResponse<Client>> {
+    return this.http.get<ApiResponse<Client>>(`${this.BASE_URL}clients/find/${dni}`);
   }
 }

@@ -90,4 +90,6 @@ export class ListClientsComponent implements OnInit, AfterViewInit {
   search(): void {
     this.dataSource.filter = this.searchClients.trim().toLowerCase();
   }
+
+  
 }
