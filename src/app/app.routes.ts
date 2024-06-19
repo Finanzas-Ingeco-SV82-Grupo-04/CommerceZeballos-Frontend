@@ -7,6 +7,7 @@ import { ListProductComponent } from './commerce/products/components/list-produc
 import { AddProductComponent } from './commerce/products/components/add-product/add-product.component';
 import { EditProductComponent } from './commerce/products/components/edit-product/edit-product.component';
 import { ListClientsComponent } from './commerce/list-clients/components/list-clients/list-clients.component';
+import { ClientDetailComponent } from './commerce/list-clients/components/client-detail/client-detail.component';
 
 export const routes: Routes = [
 
@@ -25,6 +26,7 @@ export const routes: Routes = [
             {path: 'add-product', component: AddProductComponent},
             {path: 'edit-product/:id', component: EditProductComponent},
             {path: 'all-clients', component: ListClientsComponent},
+            {path: 'client-details/:dni', component: ClientDetailComponent }
             //aqui iran las rutas hijas
         ]
     },

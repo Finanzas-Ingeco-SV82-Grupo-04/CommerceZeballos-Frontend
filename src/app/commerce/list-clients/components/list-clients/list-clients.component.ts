@@ -12,6 +12,7 @@ import {ListClientsService} from "../../services/list-clients.service";
 import {HttpClientModule} from "@angular/common/http";
 import {MatDialog, MatDialogModule} from "@angular/material/dialog";
 import {ConfirmationDialogComponent} from "../confirmation-dialog/confirmation-dialog.component";
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-list-clients',
@@ -40,9 +41,10 @@ export class ListClientsComponent implements OnInit, AfterViewInit {
   dataSource = new MatTableDataSource<Client>(this.clients);
 
   @ViewChild(MatSort) sort!: MatSort;
-  constructor(private clientService: ListClientsService, public dialog: MatDialog) {}
+  constructor(private clientService: ListClientsService, public dialog: MatDialog,private router:Router) {}
 
   ngOnInit(): void {
+    localStorage.removeItem('client');
     this.getAllClients();
     this.dataSource.filterPredicate = (data: Client, filter: string) => {
       const dataStr = `${data.firstname.toLowerCase()} ${data.lastname.toLowerCase()}`;
@@ -81,7 +83,8 @@ export class ListClientsComponent implements OnInit, AfterViewInit {
   }
 
   viewDetails(client: Client): void {
-    console.log('Ver detalles:', client);
+    localStorage.setItem('client', JSON.stringify(client));
+    this.router.navigate(['/admin/client-details', client.dni]);
   }
 
   search(): void {
