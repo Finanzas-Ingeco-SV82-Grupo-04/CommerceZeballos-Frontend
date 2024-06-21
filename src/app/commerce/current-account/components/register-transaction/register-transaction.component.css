@@ -1,0 +1,265 @@
+.container-principale {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.title {
+  width: 100%;
+  font-size: 30px;
+  font-weight: bold;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 3px solid #258d19;
+  h1 {
+    margin: 0;
+    color: #258d19;
+  }
+}
+/*CONTENEODR DE PRODUCTOS Y INPUT SEARCH*/
+.container-products {
+  width: 100%;
+  margin-top: 20px;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+/*INPUT SEARCH*/
+.search {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+.container-search {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+.second-search {
+  width: 80%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  label {
+    font-size: 18px;
+    font-family: Arial, Helvetica, sans-serif;
+  }
+}
+.search-input {
+  width: 100%;
+  display: flex;
+  background-color: #b8b8b8;
+  border-radius: 10px;
+  justify-content: center;
+  align-items: center;
+
+  i {
+    font-size: 20px;
+    margin-left: 10px;
+    margin-right: 10px;
+  }
+}
+.product-not-found {
+  font-family: Arial, Helvetica, sans-serif;
+  color: rgb(196, 193, 193);
+  margin-top: 5px;
+  font-style: italic;
+  text-align: center;
+}
+
+/*TABLA DE LOS PRODUCTOS*/
+
+.content-table {
+  margin-top: 20px;
+  height: 300px;
+  width: 40%;
+  overflow: auto;
+}
+/* Estilo para las líneas divisorias entre filas de la tabla */
+.mat-table {
+  border-collapse: separate; /* Asegura que las celdas tengan bordes separados */
+}
+
+:host::ng-deep .mat-mdc-cell {
+  border-bottom-color: #258d19;
+}
+
+.mat-mdc-header-cell {
+  border-bottom-color: #ffffff;
+}
+
+:host::ng-deep .mdc-data-table__row:last-child .mat-mdc-cell {
+  margin-bottom: 10px;
+  border-bottom: #258d19 1px solid;
+}
+
+:host::ng-deep .mdc-data-table__cell,
+:host::ng-deep .mdc-data-table__header-cell {
+  padding: 0 0 0 16px;
+  padding-top: 0px;
+}
+
+:host::ng-deep .mat-mdc-paginator-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.column-title {
+  color: #258d19;
+}
+
+/*CONTENEDOR DE TIPOS DE PAGOS*/
+.container-types-payments {
+  width: 100%;
+
+  margin-top: 20px;
+}
+.buttons-payments {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 2px;
+  align-items: center;
+  .mat-mdc-button-base {
+    font-family: "Actor", sans-serif;
+    font-size: 20px;
+    width: 50%;
+    border-radius: 5px 5px 0 0;
+  }
+}
+.buttons .mat-mdc-button-base {
+  margin: 8px 8px 8px 0;
+  background-color: #258d19;
+}
+
+.types-content {
+  width: 100%;
+  padding: 10px;
+  min-height: 250px;
+  background-color: #258d19;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  h3 {
+    color: white;
+    font-family: "Actor", sans-serif;
+    margin: 0px;
+  }
+}
+
+.description-payment {
+  margin: 20px;
+  width: 250px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  .amount {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    h3 {
+      font-size: 22px;
+    }
+  }
+  .date-payment {
+    width: 100%;
+    display: flex;
+    justify-content: start;
+    h3 {
+      font-size: 12px;
+    }
+  }
+}
+.description-payment-cuotas {
+  margin: 20px;
+  width: 350px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 20px;
+  align-items: center;
+  .date-payment {
+    width: 100%;
+    display: flex;
+    gap: 20px;
+    justify-content: space-between;
+    h3 {
+      font-size: 19px;
+    }
+  }
+  .amount {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    h3 {
+      font-size: 22px;
+    }
+  }
+}
+
+.types-content .buttons {
+  width: 100%;
+  margin: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  .mat-mdc-button-base {
+    font-family: "Actor", sans-serif;
+    font-size: 17px;
+    width: 120px;
+    border-radius: 5px;
+    color: white;
+  }
+}
+
+/*MEDIA QUERYS*/
+@media (max-width: 768px) {
+  .title {
+    h1 {
+      font-size: 24px;
+    }
+  }
+  .second-search {
+    width: 95%;
+  }
+  .container-products {
+    width: 100%;
+  }
+  .content-table {
+    width: 100%;
+  }
+  .buttons-payments {
+    .mat-mdc-button-base {
+      font-size: 14px;
+    }
+  }
+  .description-payment {
+    width: 100%;
+  }
+  .description-payment-cuotas {
+    width: 100%;
+  }
+  .description-payment-cuotas {
+    .date-payment {
+      h3 {
+        font-size: 16px;
+      }
+    }
+    .amount {
+      h3 {
+        font-size: 19px;
+      }
+    }
+  }
+}

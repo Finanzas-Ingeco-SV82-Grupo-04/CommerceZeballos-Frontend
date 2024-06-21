@@ -44,7 +44,7 @@ export class ListClientsComponent implements OnInit, AfterViewInit {
   constructor(private clientService: ListClientsService, public dialog: MatDialog,private router:Router) {}
 
   ngOnInit(): void {
-    localStorage.removeItem('client');
+    
     this.getAllClients();
     this.dataSource.filterPredicate = (data: Client, filter: string) => {
       const dataStr = `${data.firstname.toLowerCase()} ${data.lastname.toLowerCase()}`;
@@ -84,7 +84,9 @@ export class ListClientsComponent implements OnInit, AfterViewInit {
 
   viewDetails(client: Client): void {
     localStorage.setItem('client', JSON.stringify(client));
-    this.router.navigate(['/admin/client-details', client.dni]);
+    this.router.navigate([
+      `/admin/client-details/${client.dni}/${client.firstname}`
+    ]);
   }
 
   search(): void {

@@ -60,5 +60,11 @@ export class ProductService {
 
   }
 
+  getProductById(id: number): Observable<ApiResponse<Product>> {
+    return this.http.get<ApiResponse<Product>>(`${this.BASE_URL}products/findById/${id}`);
+  }
+
+  
+
 
 }

@@ -1,3 +1,4 @@
+import { LoaderComponent } from './../../../../../shared/components/loader/loader.component';
 import { Component } from '@angular/core';
 import { FormControl,FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators, ValidatorFn, AbstractControl } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
@@ -14,12 +15,14 @@ import {MatSnackBar,} from '@angular/material/snack-bar';
   standalone: true,
   imports: [
     FormsModule, ReactiveFormsModule,MatInputModule,
-    MatFormFieldModule, NgbDropdownModule,MatButtonModule
+    MatFormFieldModule, NgbDropdownModule,MatButtonModule,
+    LoaderComponent
   ],
   templateUrl: './register-client.component.html',
   styleUrl: './register-client.component.css'
 })
 export class RegisterClientComponent {
+  loading: boolean = false;
 
   typeInterest = [
     {value: 'NOMINAL', viewValue: 'NOMINAL'},
@@ -45,11 +48,6 @@ export class RegisterClientComponent {
       confirmPassword: ['', Validators.required],
 
     }, { validators: this.passwordMatchValidator })
-
-
-
-
-
 
 
     this.registerAccountForm = this.fb.group({
@@ -133,6 +131,7 @@ export class RegisterClientComponent {
     if (this.registerClientForm.valid) {
       // Validar el segundo formulario
       if (this.registerAccountForm.valid) {
+        this.loading = true;
         const dataClient: any = {
           firstname: this.registerClientForm.get('firstname')?.value,
           lastname: this.registerClientForm.get('lastname')?.value,
@@ -175,14 +174,17 @@ export class RegisterClientComponent {
           })
         ).subscribe({
           next: (accountResult: any) => {
-            this.openSnackBar('Cuenta registrada con éxito');
-            this.registerClientForm.reset(); //Limpiar formulario una vez registrado al cliente
-            this.registerAccountForm.reset();
+            if(accountResult.success){
+              this.openSnackBar('Cuenta registrada exitosamente');
+              this.loading = false;
             // Realizar la navegación solo si se ha completado con éxito el registro de cliente y cuenta
-            // this.router.navigate(['/login']);
+             this.router.navigate(['/admin/all-clients']);
+            }
           },
           error: (error: any) => {
-            this.openSnackBar(error.error.message);
+            this.loading = false;
+
+            this.openSnackBar('Error al registrar');
           }
         });
 
@@ -251,7 +253,7 @@ markFormGroupTouched(formGroup: FormGroup) {
 
 openSnackBar(message:string) {
   this._snackBar.open(message, 'Cerrar', {
-    duration: 3*3000,
+    duration: 3000,
   });
 }
 
