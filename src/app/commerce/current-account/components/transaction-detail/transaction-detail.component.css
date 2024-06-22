@@ -1,0 +1,135 @@
+.container-principale {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.title {
+  width: 100%;
+  font-size: 30px;
+  font-weight: bold;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 3px solid #258d19;
+  h1 {
+    margin: 0;
+    color: #258d19;
+  }
+}
+
+/*TABLA DE LAS TRANSACCIONES*/
+.container-products {
+  width: 100%;
+  margin-top: 20px;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.header-table {
+  width: 100%;
+  height: 53px;
+  background-color: #d9d9d9;
+  border-radius: 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  h2 {
+    font-size: 17px;
+    margin: 0px 0px 0px 10px;
+    font-family: "Actor", sans-serif;
+  }
+}
+
+.content-table {
+  margin-top: 20px;
+  height: auto;
+  width: auto;
+  overflow: auto;
+}
+/* Estilo para las líneas divisorias entre filas de la tabla */
+.mat-table {
+  border-collapse: separate; /* Asegura que las celdas tengan bordes separados */
+}
+
+:host::ng-deep .mat-mdc-cell {
+  border-bottom-color: #258d19;
+}
+
+.mat-mdc-header-cell {
+  border-bottom-color: #ffffff;
+}
+
+:host::ng-deep .mdc-data-table__row:last-child .mat-mdc-cell {
+  margin-bottom: 10px;
+  border-bottom: #258d19 1px solid;
+}
+
+:host::ng-deep .mdc-data-table__cell,
+:host::ng-deep .mdc-data-table__header-cell {
+  padding: 0 0 0 16px;
+  padding-top: 0px;
+}
+:host::ng-deep .mat-mdc-paginator-page-size {
+  display: none;
+}
+:host::ng-deep .mat-mdc-paginator-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.column-title {
+  color: #258d19;
+}
+
+.container-total {
+  width: 300px;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  background-color: #258d19;
+  border-radius: 10px;
+  padding: 10px;
+  h2 {
+    margin: 0px;
+    font-family: "Actor", sans-serif;
+    font-size: 18px;
+    color: white;
+  }
+}
+
+.total,
+.installments,
+.amount-total {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.button-back {
+  margin-top: 20px;
+  width: 100%;
+  display: flex;
+  justify-content: end;
+}
+
+/*media querys*/
+@media (max-width: 768px) {
+  .container-products {
+    width: 100%;
+  }
+  .content-table {
+    width: 100%;
+  }
+  .header-table {
+    width: 100%;
+  }
+  .container-total {
+    width: 100%;
+  }
+}

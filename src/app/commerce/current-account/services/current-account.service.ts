@@ -20,9 +20,7 @@ export class CurrentAccountService {
     
   }
 
-  getTransactionsByCurrentAccountId(currentAccountId: number): Observable<ApiResponse<Transaction[]>> {
-    return this.http.get<ApiResponse<Transaction[]>>(`${this.BASE_URL}transactions/current-account/${currentAccountId}`);
-  }
+
 
   //RECEURDA, FALTA LA LOGICA PARA ELIMINAR UNA CUENTA SI SE ELIMINA SU CLIENTE, LO MEJOR SERIA AGREGAR UN PARAMETRO DE BOLEAN PARA DESACTIVAR LA CUENTA
 }

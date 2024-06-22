@@ -1,5 +1,5 @@
 import { CurrentAccount } from './../../../current-account/model/current-account.model';
-import { AfterViewInit, Component, ViewChild } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, ViewChild } from '@angular/core';
 import { LoaderComponent } from '../../../../../shared/components/loader/loader.component';
 import { Client } from '../../model/list-clients.model';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -10,14 +10,10 @@ import {MatSliderModule} from '@angular/material/slider';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
 import {FormsModule} from '@angular/forms';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
-import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
+import { MatPaginator, MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 import { CurrentAccountService } from '../../../current-account/services/current-account.service';
 import { Transaction } from '../../../current-account/model/transaction.model';
-
-// This is a mock of the data that should be displayed in the table
-// The data should be fetched from the backend
-
-
+import { TransactionsService } from '../../../current-account/services/transactions.service';
 
 
 
@@ -27,7 +23,10 @@ export interface PeriodicElement {
   weight: number;
   symbol: string;
 }
+//tener 10 datos de ejemplo
 const ELEMENT_DATA: Transaction[] = [];
+
+
 
 
 @Component({
@@ -38,7 +37,6 @@ const ELEMENT_DATA: Transaction[] = [];
     MatButtonModule,
     MatDividerModule,
     MatSliderModule,
-    MatProgressBarModule,
     FormsModule,
     MatTableModule,
     MatPaginatorModule
@@ -46,17 +44,31 @@ const ELEMENT_DATA: Transaction[] = [];
   templateUrl: './client-detail.component.html',
   styleUrl: './client-detail.component.css'
 })
-export class ClientDetailComponent {
+export class ClientDetailComponent implements AfterViewInit{
 
+  constructor( 
+    private route:ActivatedRoute,
+    private listClientService: ListClientsService,
+    private currentAccountService: CurrentAccountService,
+    private transactionService: TransactionsService,
+    private router:Router,
+    private cdr: ChangeDetectorRef
+
+    ) { }
+
+ 
   displayedColumns: string[] = ['position','date' ,'totalAmount', 'installments', 'details'];
   dataSource = new MatTableDataSource<Transaction>(ELEMENT_DATA);
   totalElements = ELEMENT_DATA.length;
+  currentPage = 0;
 
 
-  @ViewChild(MatPaginator) paginator: MatPaginator|null=null;
+
+  @ViewChild(MatPaginator) paginator: MatPaginator | null= null;
 
   ngAfterViewInit() {
-    this.dataSource.paginator = this.paginator;
+    this.cdr.detectChanges();  // Asegurarse de que el contenido se ha renderizado
+
   }
 
 
@@ -65,37 +77,30 @@ export class ClientDetailComponent {
   balanceConsumed: string = '0.00'; // Saldo consumido
   totalAmount: string = '0.00'; // Monto total
   
-  loading: boolean = false;
 
   loadingToClient: boolean = false;
   loadingToCurrentAccount: boolean = false;
   loadingToTransactions: boolean = false;
 
+  errorDetectedToClient: boolean = false;
+  errorDetectedToCurrentAccount: boolean = false;
+  errorDetectedToTransactions: boolean = false;
+
+
   clientSelected: Client | null = null
   currentAccount: CurrentAccount | null = null;
 
-  constructor( 
-    private route:ActivatedRoute,
-    private listClientService: ListClientsService,
-    private currentAccountService: CurrentAccountService,
-    private router:Router
-    ) { }
-
+ 
   ngOnInit(): void {
+    this.loadingToClient = true;
+    this.loadingToCurrentAccount = true;
+    this.loadingToTransactions = true;
    this.selectClient();
   }
 
   selectClient(): void {//OJO AL ERROR DE LOCALSTORAGE, CUANDO SE PASE A PRODUCCION 
-    this.loading = true;
 
-    if (this.isLocalStorageAvailable()) {
-      const storedClient = localStorage.getItem('client');
-      if (storedClient) {
-        this.clientSelected = JSON.parse(storedClient);
-        this.loading = false;
-        this.getCurrentAccount();
-
-      } else {
+    
         const clientDni = this.route.snapshot.paramMap.get('dni');
         if (clientDni) {
           this.listClientService.getClientByDni(clientDni).subscribe(
@@ -103,22 +108,21 @@ export class ClientDetailComponent {
               next: (response) => {
                 if (response.data) {
                   this.clientSelected = response.data;
-                  console.log(this.clientSelected);
                   this.getCurrentAccount();
-                  
-
+                  this.loadingToClient = false;
+              
                 }
               },
               error: (error) => {
-                console.error(error);
-              },
-              complete: () => {
-                this.loading = false;
+                this.loadingToClient = false;
+
+                this.errorDetectedToClient = true;
+                
               }
             }
           );
-        }
-      }
+        
+      
     }
 
 
@@ -131,14 +135,15 @@ export class ClientDetailComponent {
       {
         next: (response) => {
           if (response.data) {
-            console.log(response.data);
             this.currentAccount = response.data;
+            this.loadingToCurrentAccount = false;
+            this.errorDetectedToCurrentAccount = false;
             this.getBalanceConsumed();
             this.getTransactions();
           }
         },
         error: (error) => {
-          console.error(error);
+          this.loadingToCurrentAccount = false;
         }
       }
     )
@@ -149,18 +154,21 @@ export class ClientDetailComponent {
     console.log(this.currentAccount);
     if(this.currentAccount){
       console.log(this.currentAccount.id);
-      this.currentAccountService.getTransactionsByCurrentAccountId(this.currentAccount.id).subscribe(
+      this.transactionService.getTransactionsByCurrentAccountId(this.currentAccount.id).subscribe(
         {
           next: (response) => {
             if (response.data) {
-              console.log(response.data);
               this.dataSource.data = response.data;
               this.totalElements = response.data.length;
-              console.log(this.totalElements);
+              this.loadingToTransactions = false;
+              this.errorDetectedToTransactions = false;
+              this.assignPaginator(); // Assign paginator after data is loaded and view is updated
+
+           
             }
           },
           error: (error) => {
-            console.error(error);
+            this.loadingToTransactions = false;
           }
         }
       )
@@ -181,7 +189,7 @@ export class ClientDetailComponent {
     if (this.clientSelected && this.clientSelected.dni && transaction.id) {
     
       this.router.navigate([
-        `/admin/client-details/${this.clientSelected.dni}/transaction/${transaction.id}/detail`
+        `/admin/client-details/${this.clientSelected.dni}/${this.clientSelected.firstname}/transaction/${transaction.id}/detail`
       ]);
 
 
@@ -190,19 +198,21 @@ export class ClientDetailComponent {
     }
   }
 
-
-
-
-  isLocalStorageAvailable(): boolean {
-    try {
-      const test = '__storage_test__';
-      localStorage.setItem(test, test);
-      localStorage.removeItem(test);
-      return true;
-    } catch (e) {
-      return false;
-    }
+  assignPaginator() {
+    // This ensures the paginator is assigned after the view has been updated
+    setTimeout(() => {
+      this.dataSource.paginator = this.paginator;
+      this.cdr.detectChanges();
+    });
   }
+
+  newTransaction(){
+    this.router.navigate([
+      `/admin/client-details/${this.clientSelected?.dni}/${this.clientSelected?.firstname}/transaction/register`
+    ]);
+  }
+
+
    
 }
 
