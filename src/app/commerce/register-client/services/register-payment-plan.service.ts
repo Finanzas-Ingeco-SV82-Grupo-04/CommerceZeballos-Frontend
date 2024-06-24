@@ -19,8 +19,9 @@ export class RegisterPaymentPlanService {
     return this.http.post<ApiResponse<any>>(`${this.BASE_URL}/payment-plans/register`, paymentPlan);
   }
 
+  /*
   findPaymentPlanByDni(dni: string): Observable<ApiResponse<PaymentPlan>> {
     return this.http.get<ApiResponse<PaymentPlan>>(`${this.BASE_URL}/payment-plans/find/${dni}`);
-  }
+  }*/
 
 }
