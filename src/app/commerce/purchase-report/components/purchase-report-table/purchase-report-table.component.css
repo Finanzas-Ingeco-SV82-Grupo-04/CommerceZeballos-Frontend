@@ -1,0 +1,46 @@
+@import url('https://fonts.googleapis.com/css2?family=Arimo:wght@400;700&display=swap');
+
+
+h1{
+  color: #258D19;
+  font-size: 36px;
+  font-family: 'Arimo', sans-serif;
+}
+.filter-buttons {
+  background-color: #d9d9d9;
+  padding: 10px;
+  border-radius: 5px;
+}
+.filter-buttons button {
+  margin: 5px; /* Ajusta este valor según la separación que desees */
+}
+.filter-buttons button:nth-child(1) {
+  background-color: #1577d2; /* Reemplaza #color1 con el color de fondo que desees para el primer botón */
+  color: white; /* Reemplaza #textColor1 con el color de texto que desees para el primer botón */
+  border-radius: 10px; /* Reemplaza radius1 con el radio de borde que desees para el primer botón */
+}
+
+.filter-buttons button:nth-child(2) {
+  background-color: white; /* Reemplaza #color2 con el color de fondo que desees para el segundo botón */
+  color: black; /* Reemplaza #textColor2 con el color de texto que desees para el segundo botón */
+  border-radius: 10px; /* Reemplaza radius2 con el radio de borde que desees para el segundo botón */
+}
+.export-print-buttons {
+  background-color: #d9d9d9;
+  padding: 10px;
+
+}
+.export-print-buttons button {
+  margin: 5px; /* Ajusta este valor según la separación que desees */
+  border-radius: 10px;
+}
+.return-button{
+  margin-top: 20px;
+  text-align: center
+
+}
+.return-button button{
+  background-color: #258D19;
+  color: white;
+  border-radius: 10px;
+}
