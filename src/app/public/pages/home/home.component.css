@@ -57,14 +57,24 @@ button{
   margin: 20px;
 }
 
-.button-sign-in{
+.button-sign-in-admin{
   background-color: #2d6b22;
   color: #FFFFFF;
 }
 
-.button-sign-up{
+.button-sign-in-client{
   background-color: #ffffff;
   color: #2d6b22;
+}
+
+.button-sign-in-admin:hover{
+  background-color: #3b932e;
+  color: #FFFFFF;
+}
+
+.button-sign-in-client:hover{
+  background-color: #4e9b42;
+  color: #e5edf6;
 }
 
 img {

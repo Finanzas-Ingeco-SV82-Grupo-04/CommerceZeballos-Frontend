@@ -17,10 +17,11 @@ import {HomeComponent} from "./public/pages/home/home.component";
 
 export const routes: Routes = [
 
-  {path: 'admin-login', component: AdminSigninComponent},
   {path: 'home', component: HomeComponent},
+  {path: 'client-login', component: ClientSigninComponent},
+  {path: 'admin-login', component: AdminSigninComponent},
   {path: '', redirectTo: 'home', pathMatch: 'full'},//default route
-  {path:'**', redirectTo: 'home', pathMatch: 'full'},
+
 
 
 
@@ -29,7 +30,7 @@ export const routes: Routes = [
 /**
   {path: 'account-detail', component: AccountDetailComponent},
 
-  {path: 'client-login', component: ClientSigninComponent},
+
 
 
   {path: '', redirectTo: 'account-detail', pathMatch: 'full'},//default route
@@ -54,5 +55,7 @@ export const routes: Routes = [
             //aqui iran las rutas hijas
     ]
   },
+
+  {path:'**', redirectTo: 'home', pathMatch: 'full'},
 
 ];
