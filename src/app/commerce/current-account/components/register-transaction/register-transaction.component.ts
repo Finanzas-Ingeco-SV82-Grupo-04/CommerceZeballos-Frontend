@@ -54,8 +54,8 @@ export class RegisterTransactionComponent   {
 
   @ViewChild('instance', { static: true }) instance!: NgbTypeahead;//obtener la instancia del componente ngbTypeahead, instance es la referencia al componente NgbTypeahead y permite acceder a sus métodos y propiedades.
   focus$ = new Subject<string>();
-  click$ = new Subject<string>();  
-  
+  click$ = new Subject<string>();
+
 
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
@@ -76,12 +76,11 @@ export class RegisterTransactionComponent   {
     }
   }
 
-
   search: OperatorFunction<string, readonly any[]> = (text$: Observable<string>) => {
     const debouncedText$ = text$.pipe(debounceTime(200), distinctUntilChanged());
     const clicksWithClosedPopup$ = this.click$.pipe(filter(() => !this.instance.isPopupOpen()));
     const inputFocus$ = this.focus$;
-    
+
     return merge(debouncedText$, inputFocus$, clicksWithClosedPopup$).pipe(
       switchMap(term => {
       if (term === '') {
@@ -112,15 +111,15 @@ export class RegisterTransactionComponent   {
 
       //sumar el precio de los productos
       this.totalAmount += foundProduct.price;
-    
+
 
 
       this.dataSource = new MatTableDataSource<Product>(this.ELEMENT_DATA);
       this.totalElements = this.ELEMENT_DATA.length;
 
-    } 
+    }
   }
-    
+
   clearSearch() {
     this.query = '';
     this.model = '';
@@ -131,7 +130,7 @@ export class RegisterTransactionComponent   {
   deleteProductOfTable(id:number){
     //eliminar de la tabla
     this.ELEMENT_DATA = this.ELEMENT_DATA.filter(product => {
-      
+
       if(product.id === id){
         this.totalAmount -= product.price;
       }
@@ -141,7 +140,7 @@ export class RegisterTransactionComponent   {
     this.totalElements = this.ELEMENT_DATA.length;
 
     //restar el precio de los productos
-  
+
   }
 
   setTabTypePayment(type: string){
@@ -154,7 +153,7 @@ export class RegisterTransactionComponent   {
   goBack(): void {
     this.router.navigate(['../../'], { relativeTo: this.route });
   }
-  
+
   sendTransaction(){
     if(this.ELEMENT_DATA.length === 0){
       this.showMessageSnackBar('Debe agregar productos');
@@ -177,7 +176,7 @@ export class RegisterTransactionComponent   {
           //dni del cliente de la ruta
           const dniClient = this.route.snapshot.paramMap.get('dni');
           if(dniClient){
-  
+
             const transaction:TransactionRequest = {
               transactionAmountNotInterest: totalAmount,
               transactionAmountWithInterest: totalAmount,//AGREGAR LA LOGICA PAR ACALCULAR EL INTERES, RECOMINEDO QUE LO HAGS EN EL BACKEND
@@ -187,7 +186,7 @@ export class RegisterTransactionComponent   {
               installmentAmount: installmentAmount,//AGREGAR LA LOGICA PARA CALCULAR EL MONTO DE LAS CUOTAS, RECOMINEDO QUE LO HAGS EN EL BACKEND
               dniClient: dniClient,
               productsIds: this.ELEMENT_DATA.map(product => product.id)
-            
+
               //recomiendo que el monto total se haga en el backend, osea en el abcked sumar los precios de los productos y calcular el interes y el monto de las cuotas
             }
             this.registerTransaction(transaction);
@@ -218,18 +217,18 @@ export class RegisterTransactionComponent   {
             installmentAmount: installmentAmount,//AGREGAR LA LOGICA PARA CALCULAR EL MONTO DE LAS CUOTAS, RECOMINEDO QUE LO HAGS EN EL BACKEND
             dniClient: dniClient,
             productsIds: this.ELEMENT_DATA.map(product => product.id)
-          
+
             //recomiendo que el monto total se haga en el backend, osea en el abcked sumar los precios de los productos y calcular el interes y el monto de las cuotas
           }
           console.log(transaction);
           this.registerTransaction(transaction);
 
         }
-        
+
       }
 
     }
-  
+
   }
 
   registerTransaction(transaction: TransactionRequest){

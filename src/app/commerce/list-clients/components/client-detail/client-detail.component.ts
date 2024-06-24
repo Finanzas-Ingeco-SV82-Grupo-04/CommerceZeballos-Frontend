@@ -46,7 +46,7 @@ const ELEMENT_DATA: Transaction[] = [];
 })
 export class ClientDetailComponent implements AfterViewInit{
 
-  constructor( 
+  constructor(
     private route:ActivatedRoute,
     private listClientService: ListClientsService,
     private currentAccountService: CurrentAccountService,
@@ -56,8 +56,8 @@ export class ClientDetailComponent implements AfterViewInit{
 
     ) { }
 
- 
-  displayedColumns: string[] = ['position','date' ,'totalAmount', 'installments', 'details'];
+
+  displayedColumns: string[] = ['position','date' ,'totalAmount', 'details'];
   dataSource = new MatTableDataSource<Transaction>(ELEMENT_DATA);
   totalElements = ELEMENT_DATA.length;
   currentPage = 0;
@@ -76,7 +76,7 @@ export class ClientDetailComponent implements AfterViewInit{
   avaiableBalance: string = '0.00'; // Saldo disponible
   balanceConsumed: string = '0.00'; // Saldo consumido
   totalAmount: string = '0.00'; // Monto total
-  
+
 
   loadingToClient: boolean = false;
   loadingToCurrentAccount: boolean = false;
@@ -90,7 +90,7 @@ export class ClientDetailComponent implements AfterViewInit{
   clientSelected: Client | null = null
   currentAccount: CurrentAccount | null = null;
 
- 
+
   ngOnInit(): void {
     this.loadingToClient = true;
     this.loadingToCurrentAccount = true;
@@ -98,9 +98,9 @@ export class ClientDetailComponent implements AfterViewInit{
    this.selectClient();
   }
 
-  selectClient(): void {//OJO AL ERROR DE LOCALSTORAGE, CUANDO SE PASE A PRODUCCION 
+  selectClient(): void {//OJO AL ERROR DE LOCALSTORAGE, CUANDO SE PASE A PRODUCCION
 
-    
+
         const clientDni = this.route.snapshot.paramMap.get('dni');
         if (clientDni) {
           this.listClientService.getClientByDni(clientDni).subscribe(
@@ -110,19 +110,19 @@ export class ClientDetailComponent implements AfterViewInit{
                   this.clientSelected = response.data;
                   this.getCurrentAccount();
                   this.loadingToClient = false;
-              
+
                 }
               },
               error: (error) => {
                 this.loadingToClient = false;
 
                 this.errorDetectedToClient = true;
-                
+
               }
             }
           );
-        
-      
+
+
     }
 
 
@@ -164,7 +164,7 @@ export class ClientDetailComponent implements AfterViewInit{
               this.errorDetectedToTransactions = false;
               this.assignPaginator(); // Assign paginator after data is loaded and view is updated
 
-           
+
             }
           },
           error: (error) => {
@@ -187,7 +187,7 @@ export class ClientDetailComponent implements AfterViewInit{
 
   viewTransactionDetails(transaction: Transaction): void {
     if (this.clientSelected && this.clientSelected.dni && transaction.id) {
-    
+
       this.router.navigate([
         `/admin/client-details/${this.clientSelected.dni}/${this.clientSelected.firstname}/transaction/${transaction.id}/detail`
       ]);
@@ -213,10 +213,10 @@ export class ClientDetailComponent implements AfterViewInit{
   }
 
 
-   
+
 }
 
 
-  
-  
+
+
 

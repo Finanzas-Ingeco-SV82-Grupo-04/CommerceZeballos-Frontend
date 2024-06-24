@@ -12,13 +12,9 @@ import { TransactionDetailComponent } from './commerce/current-account/component
 import { RegisterTransactionComponent } from './commerce/current-account/components/register-transaction/register-transaction.component';
 
 export const routes: Routes = [
-
     {path: 'client-login', component: ClientSigninComponent},
-
     {path: 'admin-login', component: AdminSigninComponent},
     {path: '', redirectTo: 'admin-login', pathMatch: 'full'},//default route
-
-
 
     {path: 'admin', component: HeaderAdminComponent,
         children: [
@@ -31,11 +27,7 @@ export const routes: Routes = [
             {path: 'client-details/:dni/:name', component: ClientDetailComponent},
             { path: 'client-details/:dni/:name/transaction/:id/detail', component: TransactionDetailComponent },
             {path: 'client-details/:dni/:name/transaction/register', component: RegisterTransactionComponent},
-
-            
             //aqui iran las rutas hijas
         ]
     },
-
-
 ];

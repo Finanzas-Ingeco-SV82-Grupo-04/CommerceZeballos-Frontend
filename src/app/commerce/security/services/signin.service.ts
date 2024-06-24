@@ -18,10 +18,8 @@ export class SigninService {
     private router: Router
   ) { }
 
-
   // Sign In
   signIn(body:signInRequest): Observable<userSignInResponse>{
-
     return this.http.post<userSignInResponse>(`${this.BASE_URL}auth/user/sign-in`, body);
   }
 

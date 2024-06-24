@@ -183,3 +183,114 @@
     margin :20px;
     cursor: pointer;
 }
+
+
+
+
+/*CONTENEDOR DE TIPOS DE PAGOS*/
+.container-types-payments {
+  width: 100%;
+
+  margin-top: 20px;
+}
+.buttons-payments {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 2px;
+  align-items: center;
+  .mat-mdc-button-base {
+    font-family: "Actor", sans-serif;
+    font-size: 20px;
+    width: 50%;
+    border-radius: 5px 5px 0 0;
+  }
+}
+.buttons .mat-mdc-button-base {
+  margin: 8px 8px 8px 0;
+  background-color: #258d19;
+}
+
+.types-content {
+  width: 100%;
+  padding: 10px;
+  min-height: 250px;
+  background-color: #258d19;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  h3 {
+    color: white;
+    font-family: "Actor", sans-serif;
+    margin: 0px;
+  }
+}
+
+.description-payment {
+  margin: 20px;
+  width: 250px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  .amount {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    h3 {
+      font-size: 22px;
+    }
+  }
+  .date-payment {
+    width: 100%;
+    display: flex;
+    justify-content: start;
+    h3 {
+      font-size: 12px;
+    }
+  }
+}
+.description-payment-cuotas {
+  margin: 20px;
+  width: 350px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 20px;
+  align-items: center;
+  .date-payment {
+    width: 100%;
+    display: flex;
+    gap: 20px;
+    justify-content: space-between;
+    h3 {
+      font-size: 19px;
+    }
+  }
+  .amount {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    h3 {
+      font-size: 22px;
+    }
+  }
+}
+
+.types-content .buttons {
+  width: 100%;
+  margin: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  .mat-mdc-button-base {
+    font-family: "Actor", sans-serif;
+    font-size: 17px;
+    width: 120px;
+    border-radius: 5px;
+    color: white;
+  }
+}

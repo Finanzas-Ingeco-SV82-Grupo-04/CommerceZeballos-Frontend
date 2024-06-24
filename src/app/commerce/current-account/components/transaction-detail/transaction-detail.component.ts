@@ -30,7 +30,7 @@ import { Product } from '../../../products/models/product.model';
   styleUrl: './transaction-detail.component.css'
 })
 export class TransactionDetailComponent {
-  constructor( 
+  constructor(
     private route:ActivatedRoute,
     private router:Router,
     private transactionService: TransactionsService,
@@ -53,14 +53,14 @@ export class TransactionDetailComponent {
 
   errorDetectedToTransaction: boolean = false;
   errorDetectedToProducts: boolean = false;
- 
+
 
 
   nameClient: string = ''
   transaction: Transaction | null = null
   amountTotalOfInstallments: number = 0
 
-  
+
 
   ngOnInit(): void {
 
@@ -101,7 +101,7 @@ export class TransactionDetailComponent {
   }
 
   getProductsByIds(productsIds: number[]): void {
-    
+
     productsIds.map((productId) => {
       this.productService.getProductById(productId).subscribe(
         {

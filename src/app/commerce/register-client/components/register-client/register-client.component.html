@@ -128,24 +128,14 @@
                     </mat-form-field>
                 </div>
             </div>
-
-
-
-
-
         </form>
-
-
 
         <div class="title-form-account">
             <h2>Cuenta a configurar</h2>
         </div>
 
-
-
         <form [formGroup]="registerAccountForm"  class="register-form-account" (ngSubmit)="onSubmit()">
             <div class="subcontainer-account">
-
                 <div class="subcontainer-form-account dropdown ">
                     <div class="description">
                         <h4>Tipo de tasa de interes: </h4>
@@ -166,9 +156,7 @@
                             <mat-error>Escoge una opcion</mat-error>
                         }
                     </div>
-
                 </div>
-
 
                 <div class="subcontainer-form-account">
                     <div class="description">
@@ -180,11 +168,42 @@
                             <mat-error>Dato <strong>requerido</strong></mat-error>
                         }
                     </mat-form-field>
-
-
                 </div>
-
            </div>
+
+          <div class="subcontainer-form-account">
+            <div class="description">
+              <h4>Tasa de interes %: </h4>
+            </div>
+            <mat-form-field  class="number">
+              <input  matInput formControlName="interestRate" placeholder="0" >
+              @if (registerAccountForm.get('interestRate')?.hasError('required')) {
+                <mat-error>Dato <strong>requerido</strong></mat-error>
+              }
+            </mat-form-field>
+
+            <div class="subcontainer-form-account dropdown ">
+              <div class="description">
+                <h4>Frecuencia de pago: </h4>
+              </div>
+
+              <div ngbDropdown placement="top-end" class="d-inline-block">
+                <button type="button" style="border-color: #cecece;color: rgb(0, 0, 0); background-color: #cecece;" class="btn btn-outline-primary" id="dropdownBasic3" ngbDropdownToggle>
+                  {{registerAccountForm.get('paymentFrequency')?.value || 'Seleccionar'}}
+                </button>
+                <div ngbDropdownMenu aria-labelledby="dropdownBasic3">
+                  @for (type of typeFrecuency; track $index) {
+                    <button type="button" ngbDropdownItem (click)="selectTypeFrecuency(type.value)" style="color: black">
+                      {{type.viewValue}}
+                    </button>
+                  }
+                </div>
+                @if (registerAccountForm.get('paymentFrequency')?.hasError('required')) {
+                  <mat-error>Escoge una opcion</mat-error>
+                }
+              </div>
+            </div>
+          </div>
 
            <div class="subcontainer-account">
             <div class="subcontainer-form-account">
@@ -201,49 +220,78 @@
                     }
                 </mat-form-field>
             </div>
-            <div class="subcontainer-form-account">
-                <div class="description">
-                    <h4>Dia de pago: </h4>
+
+             <div class="subcontainer-form-account">
+               <div class="description">
+                 <h4>Plazo de pago (meses): </h4>
+               </div>
+               <mat-form-field  class="number">
+                 <input  matInput formControlName="numberOfMonths" placeholder="0" >
+                 @if (registerAccountForm.get('numberOfMonths')?.hasError('required')) {
+                   <mat-error>Entre 1 y 3</mat-error>
+                 }
+                 @if (registerAccountForm.hasError('paymentTermValidator')) {
+                   <mat-error>De 1 mes a 3 meses</mat-error>
+                 }
+               </mat-form-field>
+             </div>
+
+       </div>
+
+          <div class="container-types-payments">
+            <div class="buttons-payments">
+              @if (tabTypePayment =='Proxima compra') {
+                <button (click)="setTabTypePayment('Proxima compra')" style="background-color: #258d19; color: white;" mat-flat-button>Siguiente fecha</button>
+              }@else {
+                <button  (click)="setTabTypePayment('Proxima compra')"  mat-flat-button>Siguiente fecha</button>
+              }
+              @if(tabTypePayment =='En cuotas') {
+                <button  (click)="setTabTypePayment('En cuotas')" style="background-color: #258d19; color: white;" mat-flat-button>En cuotas</button>
+              }@else {
+                <button (click)="setTabTypePayment('En cuotas')" mat-flat-button>En cuotas</button>
+              }
+            </div>
+          </div>
+
+          <div class="types-content">
+            @if(tabTypePayment =='Proxima compra'){
+              <div class="description-payment">
+                <div class="amount">
+                  <h3> Monto total:</h3>
+                  <h3>S/. {{totalAmount}} </h3>
                 </div>
-                <mat-form-field  class="number">
-                    <input  matInput formControlName="paymentDay" placeholder="0" >
-                    @if (registerAccountForm.get('paymentDay')?.hasError('required')) {
-                        <mat-error>Dato <strong>requerido</strong></mat-error>
-                    }
-                    @if (registerAccountForm.hasError('limitPaymentDayValidator')) {
-                        <mat-error>Entre 1-28</mat-error>
-                    }
-                </mat-form-field>
-            </div>
+                <div class="date-payment">
+                  <h3> *Proxima fecha de pago:</h3>
+                  <h3> 12/12/2021</h3>
+                </div>
 
-       </div>
+              </div>
 
+            }@else {
+              <div class="description-payment-cuotas">
 
-       <div class="subcontainer-form-account">
-            <div class="description">
-                <h4>Tasa de interes %: </h4>
-            </div>
-            <mat-form-field  class="number">
-                <input  matInput formControlName="interestRate" placeholder="0" >
-                @if (registerAccountForm.get('interestRate')?.hasError('required')) {
-                    <mat-error>Dato <strong>requerido</strong></mat-error>
-                }
-            </mat-form-field>
-        </div>
+                <div class="amount">
+                  <h3> Monto total:</h3>
+                  <h3>S/. {{totalAmount}}</h3>
+                </div>
 
+              </div>
+            }
+          </div>
 
-       <div class="container-button">
-        <button class="buttonSubmit" type="submit" mat-flat-button  style="color: rgb(255, 255, 255); background-color: #258D19;" >
-            Registrar cliente
-        </button>
-       </div>
-
-
+          <div class="container-button">
+            <button class="buttonSubmit" type="submit" mat-flat-button  style="color: rgb(255, 255, 255); background-color: #258D19;" >
+              Registrar cliente
+            </button>
+          </div>
 
 
         </form>
 
+
     </div>
+
+
 
 </div>
 <app-loader [isLoading]="loading"></app-loader>

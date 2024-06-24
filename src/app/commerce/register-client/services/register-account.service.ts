@@ -21,7 +21,4 @@ export class RegisterAccountService {
   registerClient(body: registerClient): any {
     return this.signinService.registerClient(body);
   }
-
-
-
 }

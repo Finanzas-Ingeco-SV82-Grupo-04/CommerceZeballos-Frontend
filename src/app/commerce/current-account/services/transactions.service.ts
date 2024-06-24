@@ -26,4 +26,7 @@ export class TransactionsService {
     return this.http.post<ApiResponse<any>>(`${this.BASE_URL}transactions/register`, transaction);
   }
 
+  registerPaymentPlan(paymentPlan: any): Observable<ApiResponse<any>> {
+    return this.http.post<ApiResponse<any>>(`${this.BASE_URL}payment-plan/register`, paymentPlan);
+  }
 }
