@@ -21,6 +21,7 @@ import {MatSnackBar,} from '@angular/material/snack-bar';
   templateUrl: './register-client.component.html',
   styleUrl: './register-client.component.css'
 })
+
 export class RegisterClientComponent {
   loading: boolean = false;
 
@@ -123,7 +124,6 @@ export class RegisterClientComponent {
   selectTypeInterest(value: string): void {
     this.registerAccountForm.get('typeInterest')?.setValue(value);
   }
-
 
 
   onSumitRegisterAccount() {

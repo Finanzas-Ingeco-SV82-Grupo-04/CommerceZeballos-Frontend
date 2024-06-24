@@ -1,0 +1,145 @@
+
+
+@defer(
+  when (
+    (!loadingToClient && !loadingToCurrentAccount && !loadingToTransactions) &&
+    (!errorDetectedToClient && !errorDetectedToCurrentAccount && !errorDetectedToTransactions)
+  )
+  ){
+  <div class="container-principale">
+
+    <div class="title">
+      <h1>Cliente {{clientSelected?.firstname}}  </h1>
+
+      <button mat-flat-button style="color:white; background-color: #258d19;">Ver cuenta</button>
+
+    </div>
+
+    <div class="container-line-balance">
+
+      <div class="subcontainer-titles-account">
+        <h2>Consumido</h2>
+        <h2>Disponible</h2>
+      </div>
+
+      <div class="container-line">
+
+        <div class="subcontainer-amounts">
+          <h2>S/. {{currentAccount?.usedCredit}}</h2>
+          <h2 style="color: #258d19;">S/. {{avaiableBalance}}</h2>
+        </div>
+
+        <div class="line">
+          <mat-slider class="custom-slider example-margin non-interactive-slider"  style="width: 100%; margin: 0px;padding: 0px;" >
+            <input style="pointer-events: none;cursor: none;" type="range"  [(ngModel)]="balanceConsumed" matSliderThumb>
+          </mat-slider>
+        </div>
+
+
+      </div>
+
+      <div class="container-description-account">
+        <p>Credito aprobado S/. {{totalAmount}}</p>
+      </div>
+
+    </div>
+
+    <div class="container-transactions">
+
+      <div class="header-table">
+        <h2>Mira aqui los movimientos realizados:</h2>
+        <div class="buttons">
+          <button mat-flat-button style="color:rgb(0, 0, 0); background-color: #FFC01F;">Reporte de saldo</button>
+          <button mat-flat-button style="color:rgb(0, 0, 0); background-color: #ADADAD;">Filtrar por fecha</button>
+        </div>
+      </div>
+
+      <div class="content-table">
+
+        <table mat-table [dataSource]="dataSource">
+
+
+          <ng-container matColumnDef="position">
+            <th class="column-title" mat-header-cell *matHeaderCellDef> N° </th>
+            <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+          </ng-container>
+
+
+          <ng-container matColumnDef="date">
+            <th class="column-title" mat-header-cell *matHeaderCellDef> Fecha realizada </th>
+            <td mat-cell *matCellDef="let element"> {{element.transactionDate}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="totalAmount">
+            <th class="column-title" mat-header-cell *matHeaderCellDef> Monto total </th>
+            <td mat-cell *matCellDef="let element"> {{element.transactionAmountWithInterest}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="installments">
+            <th class="column-title" mat-header-cell *matHeaderCellDef > N° cuotas </th>
+            <td mat-cell *matCellDef="let element"> {{element.installments}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="details">
+            <th class="column-title" mat-header-cell *matHeaderCellDef> Detalles </th>
+            <td mat-cell *matCellDef="let element">
+
+              <button (click)="viewTransactionDetails(element)" class="button-table" mat-flat-button style="color:white; background-color: #258d19;">Ver detalle</button>
+
+
+            </td>
+          </ng-container>
+
+
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+
+        @if(totalElements == 0){
+          <div class="no-data">
+            <h2>Aun no hay transacciones</h2>
+          </div>
+        }@else{
+
+          <mat-paginator  [pageSizeOptions]="[5, 10, 20]"
+
+                          showFirstLastButtons
+                          aria-label="Select page of periodic elements">
+          </mat-paginator>
+        }
+
+      </div>
+
+    </div>
+
+    <div class="button-to-payments">
+      <div class="subcontainer-registry-new">
+        <button mat-flat-button style="color:white; background-color: #258d19;" (click)="newTransaction()">Registrar nueva compra</button>
+      </div>
+
+      <div class="subcontainer-payment">
+        <div class="details">
+          <h2>Pago proximo:</h2>
+          <h2 style="color:#258d19; font-size: 25px;">S/. 300.00</h2>
+        </div>
+        <button mat-flat-button style="color:white; background-color: #1577D2;">Pagar</button>
+      </div>
+
+    </div>
+
+
+  </div>
+}@placeholder {
+  @if (!errorDetectedToClient && !errorDetectedToCurrentAccount && !errorDetectedToTransactions) {
+    <app-loader [isLoading]="true"></app-loader>
+  }
+
+
+}
+
+@if (errorDetectedToClient || errorDetectedToCurrentAccount || errorDetectedToTransactions) {
+  <div class="error-container">
+    <h4>Ha ocurrido un error, intentalo mas tarde</h4>
+  </div>
+}

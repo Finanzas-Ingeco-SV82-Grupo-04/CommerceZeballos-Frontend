@@ -10,32 +10,49 @@ import { ListClientsComponent } from './commerce/list-clients/components/list-cl
 import { ClientDetailComponent } from './commerce/list-clients/components/client-detail/client-detail.component';
 import { TransactionDetailComponent } from './commerce/current-account/components/transaction-detail/transaction-detail.component';
 import { RegisterTransactionComponent } from './commerce/current-account/components/register-transaction/register-transaction.component';
+import {
+  AccountDetailComponent
+} from "./commerce/customer-account-detail/components/account-detail/account-detail.component";
+import {HomeComponent} from "./public/pages/home/home.component";
 
 export const routes: Routes = [
 
-    {path: 'client-login', component: ClientSigninComponent},
+  {path: 'admin-login', component: AdminSigninComponent},
+  {path: 'home', component: HomeComponent},
+  {path: '', redirectTo: 'home', pathMatch: 'full'},//default route
+  {path:'**', redirectTo: 'home', pathMatch: 'full'},
 
-    {path: 'admin-login', component: AdminSigninComponent},
-    {path: '', redirectTo: 'admin-login', pathMatch: 'full'},//default route
 
 
 
-    {path: 'admin', component: HeaderAdminComponent,
-        children: [
-            {path: '', redirectTo:'register-client', pathMatch: 'full'},
-            {path: 'register-client', component: RegisterClientComponent},
-            {path: 'products', component: ListProductComponent},
-            {path: 'add-product', component: AddProductComponent},
-            {path: 'edit-product/:id', component: EditProductComponent},
-            {path: 'all-clients', component: ListClientsComponent},
-            {path: 'client-details/:dni/:name', component: ClientDetailComponent},
-            { path: 'client-details/:dni/:name/transaction/:id/detail', component: TransactionDetailComponent },
-            {path: 'client-details/:dni/:name/transaction/register', component: RegisterTransactionComponent},
 
-            
+/**
+  {path: 'account-detail', component: AccountDetailComponent},
+
+  {path: 'client-login', component: ClientSigninComponent},
+
+
+  {path: '', redirectTo: 'account-detail', pathMatch: 'full'},//default route
+**/
+
+
+
+
+
+  {path: 'admin', component: HeaderAdminComponent,
+    children: [
+      {path: '', redirectTo:'register-client', pathMatch: 'full'},
+      {path: 'register-client', component: RegisterClientComponent},
+      {path: 'products', component: ListProductComponent},
+      {path: 'add-product', component: AddProductComponent}, {path: 'edit-product/:id', component: EditProductComponent},
+      {path: 'all-clients', component: ListClientsComponent},
+      {path: 'client-details/:dni/:name', component: ClientDetailComponent},
+      { path: 'client-details/:dni/:name/transaction/:id/detail', component: TransactionDetailComponent },
+      {path: 'client-details/:dni/:name/transaction/register', component: RegisterTransactionComponent},
+
+
             //aqui iran las rutas hijas
-        ]
-    },
-
+    ]
+  },
 
 ];
