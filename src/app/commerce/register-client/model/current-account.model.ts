@@ -3,9 +3,11 @@ export interface registerCurrentAccount{
     typeInterest: typeInterest;
     creditLimit: number;
     numberOfMonths: number;
-    paymentTerm: string;
+    typeCredit: string;
+    //paymentTerm: string;
     paymentFrequency: typeFrecuency;
-    monthlyEffectiveInterestRate: number;
+    //monthlyEffectiveInterestRate: number;
+    interesRate: number;
     moratoriumRate: number;
     dniClient: string;
 }

@@ -23,7 +23,6 @@ export interface PeriodicElement {
   weight: number;
   symbol: string;
 }
-//tener 10 datos de ejemplo
 const ELEMENT_DATA: Transaction[] = [];
 
 
@@ -70,6 +69,10 @@ export class ClientDetailComponent implements AfterViewInit{
     this.cdr.detectChanges();  // Asegurarse de que el contenido se ha renderizado
 
   }
+
+  paymentPlansListByDni: any[] = [];
+  montoProximoAPagar: number =0;
+  fechaProximoPago: string = '';
 
 
 
@@ -162,9 +165,8 @@ export class ClientDetailComponent implements AfterViewInit{
               this.totalElements = response.data.length;
               this.loadingToTransactions = false;
               this.errorDetectedToTransactions = false;
+              this.getPaymentPlansByDni();
               this.assignPaginator(); // Assign paginator after data is loaded and view is updated
-
-
             }
           },
           error: (error) => {
@@ -173,7 +175,51 @@ export class ClientDetailComponent implements AfterViewInit{
         }
       )
     }
+  }
 
+  getPaymentPlansByDni(): void {
+    if (this.clientSelected && this.clientSelected.dni) {
+      this.transactionService.getPaymentPlans(this.clientSelected.dni).subscribe(
+        {
+          next: (response) => {
+            if (response.data) {
+              this.paymentPlansListByDni = response.data;
+              //ordenar lan data por fecha de menor a mayor
+              this.paymentPlansListByDni = this.paymentPlansListByDni.sort((a, b) => {
+                return new Date(a.date).getTime() - new Date(b.date).getTime();
+              });
+
+              if(this.paymentPlansListByDni[0].creditType=='AMERICANO'){//se suma el credito usado del cliente
+                this.montoProximoAPagar = this.paymentPlansListByDni[0].paymentAmount + this.currentAccount?.usedCredit || 0;
+                //convertir a dos decimales y a numero
+                this.montoProximoAPagar = parseFloat(this.montoProximoAPagar.toFixed(2));
+                
+                
+                //el ultimo del array es el proximo pago
+                this.fechaProximoPago = this.paymentPlansListByDni[this.paymentPlansListByDni.length-1].startDate;
+              }
+              if(this.paymentPlansListByDni[0].creditType=='FRANCES'){//se suma el credito usado del cliente
+
+                //filtrar los pasos que no esten pagados
+                this.paymentPlansListByDni = this.paymentPlansListByDni.filter((paymentPlan: any) => {
+                  return paymentPlan.isPaid == false;
+                });
+
+
+                this.montoProximoAPagar = this.paymentPlansListByDni[0].paymentAmount;
+                //convertir a dos decimales y a numero
+                this.montoProximoAPagar = parseFloat(this.montoProximoAPagar.toFixed(2));
+                //el ultimo del array es el proximo pago
+                this.fechaProximoPago = this.paymentPlansListByDni[0].startDate;
+              }
+            }
+          },
+          error: (error) => {
+
+          }
+        }
+      )
+    }
   }
 
 
@@ -207,9 +253,43 @@ export class ClientDetailComponent implements AfterViewInit{
   }
 
   newTransaction(){
+    //verificar que el creditos usado no sea mayor al limite de credito
+    if(this.currentAccount){
+      if(this.currentAccount.usedCredit >= this.currentAccount.creditLimit){
+        alert('El credito usado es mayor o igual al limite de credito');
+        return;
+      }
+      
+    }
+
+
     this.router.navigate([
       `/admin/client-details/${this.clientSelected?.dni}/${this.clientSelected?.firstname}/transaction/register`
     ]);
+  }
+
+  payment(){
+    //verificar que los planes sean FRANCES
+    console.log(this.paymentPlansListByDni[0].creditType);
+    if(this.paymentPlansListByDni[0].creditType=='FRANCES'){
+
+      this.transactionService.updateStatusPaymentPlan(this.paymentPlansListByDni[0].id, true).subscribe(
+        {
+          next: (response) => {
+           
+              this.getPaymentPlansByDni();
+              alert('Pago realizado con exito');
+            
+          },
+          error: (error) => {
+              console.log(error);
+          }
+        }
+      )
+      
+    }else{
+      alert('Metodo Frances, se paga al final de periodo');
+    }
   }
 
 

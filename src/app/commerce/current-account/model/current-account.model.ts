@@ -3,9 +3,7 @@ export interface CurrentAccount {
     typeInterest: string;
     creditLimit: number;
     usedCredit: number;
-    paymentDate: string;
     openingDate: string;
-    paymentDay: number;
     accountClosingDate: string;
     interestRate: number;
     moratoriumRate: number;

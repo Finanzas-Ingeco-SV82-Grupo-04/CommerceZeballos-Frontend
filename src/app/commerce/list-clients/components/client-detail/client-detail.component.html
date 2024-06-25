@@ -71,7 +71,7 @@
 
                       <ng-container matColumnDef="totalAmount">
                         <th class="column-title" mat-header-cell *matHeaderCellDef> Monto total </th>
-                        <td mat-cell *matCellDef="let element">S/. {{element.transactionAmountWithInterest}} </td>
+                        <td mat-cell *matCellDef="let element">S/. {{element.transactionAmountNotInterest}} </td>
                       </ng-container>
 
                       <ng-container matColumnDef="details">
@@ -112,9 +112,10 @@
             <div class="subcontainer-payment">
                 <div class="details">
                     <h2>Pago proximo:</h2>
-                    <h2 style="color:#258d19; font-size: 25px;">S/. 300.00</h2>
+                    <h2 style="color:#258d19; font-size: 25px;">S/. {{montoProximoAPagar}}</h2>
+                    <label for="">Fecha proxima: {{fechaProximoPago}}</label>
                 </div>
-                <button mat-flat-button style="color:white; background-color: #1577D2;">Pagar</button>
+                <button (click)="payment()" mat-flat-button style="color:white; background-color: #1577D2;">Pagar</button>
             </div>
 
         </div>

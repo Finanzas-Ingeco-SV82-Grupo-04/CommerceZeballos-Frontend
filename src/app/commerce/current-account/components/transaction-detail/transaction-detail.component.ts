@@ -88,7 +88,7 @@ export class TransactionDetailComponent {
           if(response.data){
             this.transaction = response.data
             this.loadingToTransaction = false;
-            this.amountTotalOfInstallments = this.transaction.transactionAmountWithInterest - this.transaction.transactionAmountNotInterest
+            //this.amountTotalOfInstallments = this.transaction.transactionAmountWithInterest - this.transaction.transactionAmountNotInterest
             this.getProductsByIds(this.transaction.productIds)
           }
         },

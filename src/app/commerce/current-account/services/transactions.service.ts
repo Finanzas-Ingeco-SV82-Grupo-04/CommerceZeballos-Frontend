@@ -26,7 +26,12 @@ export class TransactionsService {
     return this.http.post<ApiResponse<any>>(`${this.BASE_URL}transactions/register`, transaction);
   }
 
-  registerPaymentPlan(paymentPlan: any): Observable<ApiResponse<any>> {
-    return this.http.post<ApiResponse<any>>(`${this.BASE_URL}payment-plan/register`, paymentPlan);
+  getPaymentPlans(dni: string): Observable<ApiResponse<any>> {
+    return this.http.get<ApiResponse<any>>(`${this.BASE_URL}payment-plans/find/${dni}`);
   }
+
+  updateStatusPaymentPlan(paymentPlanId: number, isPaid: boolean): Observable<ApiResponse<any>> {
+    return this.http.put<ApiResponse<any>>(`${this.BASE_URL}payment-plans/update/${paymentPlanId}?isPaid=${isPaid}`, {});
+}
+
 }

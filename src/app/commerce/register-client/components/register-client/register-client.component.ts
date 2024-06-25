@@ -70,12 +70,12 @@ export class RegisterClientComponent{
     this.registerAccountForm = this.fb.group({
       typeInterest: ['', Validators.required],////
       creditLimit: ['', Validators.required],//
-      paymentTerm: ['', Validators.required],//
+      //paymentTerm: ['', Validators.required],//
       numberOfMonths: ['', Validators.required],//
       paymentFrequency: ['', Validators.required],
       interestRate: ['', Validators.required],//
       moratoriumRate: ['', Validators.required],//
-      dniClient: ['', Validators.required],
+      //dniClient: ['', Validators.required],
       //paymentDate: ['', Validators.required],
       //accountClosingDate: ['', Validators.required],
     },{ validators: [this.limitCreditValidator, this.paymentTermValidator] })
@@ -101,6 +101,8 @@ export class RegisterClientComponent{
       return null;
     }
   }
+
+
   limitCreditValidator: ValidatorFn = (control: AbstractControl): { [key: string]: any } | null => {
     const creditLimit = control.get('creditLimit');
     if (!creditLimit) {
@@ -136,6 +138,7 @@ export class RegisterClientComponent{
     }
   }
 
+
   selectTypeInterest(value: string): void {
     this.registerAccountForm.get('typeInterest')?.setValue(value);
   }
@@ -147,8 +150,9 @@ export class RegisterClientComponent{
   onSubmit() { //onSumitRegisterAccount
     // Validar el primer formulario
     if (this.registerClientForm.valid) {
-      // Validar el segundo formulario
-
+      // Validar el segundo formulario\
+      console.log(this.registerAccountForm.value);
+      if(this.registerAccountForm.valid){
         this.loading = true;
 
         const dataClient: any = {
@@ -168,86 +172,73 @@ export class RegisterClientComponent{
 
         //convertir a local date
         const paymentTerm = this.registerAccountForm.get('numberOfMonths')?.value;
-        const date = new Date();
-        let newMonth = date.getMonth() + 1; // Enero es 0
-        let newYear = date.getFullYear();
-
-        for (let i = 0; i < paymentTerm; i++) {
-          newMonth++;
-          if (newMonth > 12) {
-            newMonth = 1;
-            newYear++;
-          }
-        }
-
-        const paymentDate = `${newYear}-${String(newMonth).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
+       
 
       const dataCurrentAccount: any = {
           typeInterest: this.registerAccountForm.get('typeInterest')?.value,
           creditLimit: this.registerAccountForm.get('creditLimit')?.value,
           numberOfMonths: this.registerAccountForm.get('numberOfMonths')?.value,
-          paymentTerm: paymentDate,
+          //paymentTerm: paymentDate,
+          typeCredit: 'Tipo de credito',
           paymentFrequency: this.registerAccountForm.get('paymentFrequency')?.value,
           interestRate: this.registerAccountForm.get('interestRate')?.value,
           moratoriumRate: this.registerAccountForm.get('moratoriumRate')?.value,
           dniClient: this.registerClientForm.get('dni')?.value,
         };
 
+        if(this.tabTypePayment =='Proxima compra'){
+          dataCurrentAccount.typeCredit = 'AMERICANO';
+        }
+        if(this.tabTypePayment =='En cuotas'){
+          dataCurrentAccount.typeCredit = 'FRANCES';
+        }
+        if(this.registerAccountForm.get('paymentFrequency')?.value == 'WEEKLY'){
+          dataCurrentAccount.paymentFrequency = 'SEMANAL';
+        }
+        if(this.registerAccountForm.get('paymentFrequency')?.value == 'BIWEEKLY'){
+          dataCurrentAccount.paymentFrequency = 'QUINCENAL';
+        }
 
 
-        // Calcular la tasa de interés según la frecuencia de pago
-        const interestRateByPaymentFrequency = this.calculateInterestRateByFrequency(
-          this.registerAccountForm.get('interestRate')?.value,
-          this.registerAccountForm.get('paymentFrequency')?.value
-        );
-
-      const totalInstallments = dataCurrentAccount.paymentFrequency === 'WEEKLY' ? dataCurrentAccount.numberOfMonths * 4 : dataCurrentAccount.numberOfMonths * 2;
-
-        const paymentPlan: PaymentPlan = {
-          AmountNotInterest: dataCurrentAccount.creditLimit,
-          transactionType: this.tabTypePayment === 'Proxima compra' ? TypeTransactionType.PROXIMA_FECHA : TypeTransactionType.CUOTAS,
-          Description: this.tabTypePayment === 'Proxima compra' ? TypeDescription.AMERICANO : TypeDescription.FRANCES,
-          dniClient: this.registerClientForm.get('dni')?.value,
-          paymentFrequency: this.registerAccountForm.get('paymentFrequency')?.value,
-          interestRateByPaymentFrequency: interestRateByPaymentFrequency,
-          installments: totalInstallments,
-          amountForEachInstallmentId: this.calculateInstallmentAmounts(
-            dataCurrentAccount.creditLimit,
-            interestRateByPaymentFrequency,
-            totalInstallments,
-            this.tabTypePayment === 'Proxima compra' ? TypeDescription.AMERICANO : TypeDescription.FRANCES,
-          )
-        };
-
-        this.registerClient.registerClient(dataClient).pipe(
-          switchMap((clientResult: any) => {
-            // Una vez que el cliente esté registrado, procedemos a registrar la cuenta
-            return this.registerClient.registerCurrentAccount(this.registerAccountForm.value);
-          }),
-          switchMap((accountResult: any) => {
-            return this.registerPaymentPlan.registerPaymentPlan(paymentPlan);
-          })
-        ).subscribe({
-          next: (accountResult: any) => {
-            if(accountResult.success){
-              this.openSnackBar('Cuenta registrada exitosamente');
-              this.loading = false;
-            // Realizar la navegación solo si se ha completado con éxito el registro de cliente y cuenta
-             this.router.navigate(['/admin/all-clients']);
-            }
-          },
-          error: (error: any) => {
-            this.loading = false;
-
-            this.openSnackBar('Error al registrar');
-          }
-        });
+          console.log(dataClient);
+          console.log(dataCurrentAccount);
+       this.registerClient.registerClient(dataClient).pipe(
+         switchMap((clientResult: any) => {
+           // Una vez que el cliente esté registrado, procedemos a registrar la cuenta
+           return this.registerClient.registerCurrentAccount(dataCurrentAccount);
+         }),/*
+         switchMap((accountResult: any) => {
+           return this.registerPaymentPlan.registerPaymentPlan(paymentPlan);
+         })*/
+       ).subscribe({
+         next: (accountResult: any) => {
+           if(accountResult.success){
+             this.openSnackBar('Cuenta registrada exitosamente');
+             this.loading = false;
+           // Realizar la navegación solo si se ha completado con éxito el registro de cliente y cuenta
+            this.router.navigate(['/admin/all-clients']);
+           }
+         },
+         error: (error: any) => {
+           this.loading = false;
+           this.openSnackBar('Error al registrar');
+         }
+       });
 
 
 
-        console.log('Client data:', dataClient);
-        console.log('Account data:', dataCurrentAccount);
-        console.log('Payment plan data:', paymentPlan);
+
+        
+      } else {
+       
+        this.markFormGroupTouched(this.registerAccountForm);
+        console.log('El segundo formulario no es válido');
+      }
+
+ 
+
+
+
 
     } else {
       this.markFormGroupTouched(this.registerClientForm);
@@ -255,48 +246,6 @@ export class RegisterClientComponent{
     }
   }
 
-  // Calcular la tasa de interés según la frecuencia de pago
-  calculateInterestRateByFrequency(monthlyRate: number, frequency: typeFrecuency): number {
-    const daysInMonth = 30;
-    const daysInFrequency = frequency === typeFrecuency.SEMANAL ? 7 : 15; // Semanal o quincenal
-    const effectiveRate = Math.pow(1 + monthlyRate / 100, daysInFrequency / daysInMonth) - 1;
-    return effectiveRate * 100;
-  }
-
-
-  calculateInstallmentAmounts(creditLimit: number, interestRate: number, totalInstallments: number, method: TypeDescription): Array<{ installmentId: number, amount: number }> {
-    const installmentAmounts = [];
-    let te = interestRate / 100;
-    let remainingBalance = creditLimit;
-    let installmentAmount = 0;
-
-    if (method === TypeDescription.AMERICANO) {
-      let interestOnly = remainingBalance * te;
-      interestOnly = Math.round(interestOnly * 100) / 100;
-
-      for (let i = 1; i < totalInstallments; i++) {
-        installmentAmounts.push({ installmentId: i, amount: interestOnly });
-      }
-
-      // última cuota: interés + amortización
-      let lastInstallmentAmount = interestOnly + remainingBalance;
-      lastInstallmentAmount = Math.round(lastInstallmentAmount * 100) / 100;
-      installmentAmounts.push({ installmentId: totalInstallments, amount: lastInstallmentAmount });
-
-    } else if (method === TypeDescription.FRANCES) {
-      const numerator = Math.pow(1 + te, totalInstallments);
-      const denominator = Math.pow(1 + te, totalInstallments) - 1;
-
-      installmentAmount = (remainingBalance * te * numerator) / denominator;
-      installmentAmount = Math.round(installmentAmount * 100) / 100;
-
-      for (let i = 1; i <= totalInstallments; i++) {
-        installmentAmounts.push({ installmentId: i, amount: installmentAmount });
-      }
-    }
-
-    return installmentAmounts;
-  }
 
   markFormGroupTouched(formGroup: FormGroup) {
       Object.values(formGroup.controls).forEach(control => {
@@ -308,11 +257,7 @@ export class RegisterClientComponent{
       });
   }
 
-  openSnackBar(message:string) {
-    this._snackBar.open(message, 'Cerrar', {
-      duration: 3000,
-    });
-  }
+  
 
   tabTypePayment: string='Proxima compra';
   totalAmount: number=0;
@@ -328,4 +273,9 @@ export class RegisterClientComponent{
     });
   }
 
+  openSnackBar(message:string) {
+    this._snackBar.open(message, 'Cerrar', {
+      duration: 3000,
+    });
+  }
 }
