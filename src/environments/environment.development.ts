@@ -1,5 +1,5 @@
 export const environment = {
     development:false,
-    baseUrl: 'http://localhost:8082/api/v1/',
+    baseUrl: 'https://commercezeballos-backend-1.onrender.com/api/v1/',
 };
 
